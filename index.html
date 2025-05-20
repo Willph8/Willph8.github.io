@@ -8,6 +8,7 @@
          *{
            margin: 0;
            padding: 0;
+           box-sizing: border-box;
            font-family: 'Poppins' sans-serif;
           }
           body{
@@ -54,6 +55,11 @@
           .home-content h1{
            font-size: 56px;
            font-weight: 700;
+           line-height: 1.2;
+          }
+          .home-content h3{
+           font-size: 32px;
+           font-weight: 700;
            color: #00abf0;
           }
           .home-content p{
@@ -92,8 +98,12 @@
           .btn-box a:hover{
            color: #00abf0;
           }
+          .btn-box a:nth-child(2){
+           background: transparent;
+           color: #00abf0;
+          }
           .btn-box a:nth-child(2):hover{
-           background: #00abf0;
+           color: #081b29;
           }
           .btn-box a:nth-child(2)::before{
            background: #00abf0;
