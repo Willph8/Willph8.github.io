@@ -212,6 +212,24 @@ function checkout() {
 }
 
 
+function addToCart() {
+    // 1. Get the current cart from memory
+    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+    
+    // 2. 'item' is the product currently being viewed (from your loadDetail function)
+    if (item) {
+        cart.push(item);
+        
+        // 3. Save the updated list back to memory
+        localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
+        
+        alert(item.name + " added to basket!");
+        renderCart(); // This updates the sidebar immediately
+    }
+}
+
+
+
 
   </script>
 </body>
