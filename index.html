@@ -513,6 +513,38 @@ function removeItem(index) {
 }
 
 
+function checkout() {
+    // 1. Get the items from memory
+    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+    
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    // 2. Build the message string
+    let message = "Hello GodiyakumGo! I would like to order:\n\n";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        message += `${index + 1}. *${item.name}* - ${item.price}\n`;
+        // Calculate total for the message
+        total += parseFloat(item.price.replace('R ', '').replace(',', ''));
+    });
+
+    message += `\n*Total Amount: R ${total.toFixed(2)}*`;
+    message += "\n\nPlease let me know the payment details!";
+
+    // 3. Encode the message for a URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // 4. Open WhatsApp (Replace 27123456789 with your number)
+    const whatsappNumber = "27123456789"; 
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+}
+
+
+
 
 </script>
 
