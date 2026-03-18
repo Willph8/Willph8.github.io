@@ -285,6 +285,12 @@ function addToCart() {
 loadDetail();
 
 
+if (cart.length === 0) {
+    container.innerHTML = '<p style="text-align:center; color:#666; margin-top:50px;">Your basket is empty.</p>';
+    totalElement.innerText = "R 0.00";
+    if(cartCount) cartCount.innerText = "0";
+    return;
+}
 
 
 
