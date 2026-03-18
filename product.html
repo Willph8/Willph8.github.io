@@ -147,36 +147,44 @@ function closeCart() {
 
 
 
-// 2. The Rendering Logic
 function renderCart() {
     const container = document.getElementById('cart-items-container');
     const totalElement = document.getElementById('cart-total');
+    const cartCount = document.getElementById('cart-count'); // The little number on the icon
     
-    // Get items from browser memory
     let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
     
-    container.innerHTML = ''; // Clear old list
+    container.innerHTML = ''; 
     let total = 0;
 
-    if (cart.length === 0) {
-        container.innerHTML = '<p style="text-align:center; margin-top:50px;">Your cart is empty</p>';
-    } else {
-        cart.forEach((item, index) => {
-            total += parseFloat(item.price.replace('R ', '').replace(',', ''));
-            container.innerHTML += `
-                <div class="cart-item" style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid #333;">
-                    <div>
-                        <p style="margin:0; font-weight:bold;">${item.name}</p>
-                        <p style="margin:0; color:#00ff88;">${item.price}</p>
-                    </div>
-                    <button onclick="removeItem(${index})" style="color:red; background:none; border:none; cursor:pointer;">Remove</button>
+    cart.forEach((item, index) => {
+        // Clean the price string (e.g., "R 450.00" -> 450.00)
+        const priceNum = parseFloat(item.price.replace(/[^\d.]/g, ''));
+        total += priceNum;
+
+        container.innerHTML += `
+            <div class="cart-item" style="display:flex; align-items:center; gap:10px; padding:10px; border-bottom:1px solid #333;">
+                <div style="width:50px; height:50px; background:#444; border-radius:5px; background-image:url('${item.image}'); background-size:cover;"></div>
+                <div style="flex:1">
+                    <p style="margin:0; font-size:14px; font-weight:bold;">${item.name}</p>
+                    <p style="margin:0; color:#00ff88; font-size:13px;">${item.price}</p>
                 </div>
-            `;
-        });
-    }
+                <button onclick="removeItem(${index})" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:18px;">&times;</button>
+            </div>
+        `;
+    });
+
+    // Update the Total and the Badge count
     totalElement.innerText = `R ${total.toFixed(2)}`;
+    if(cartCount) cartCount.innerText = cart.length;
 }
 
+if (cart.length === 0) {
+    container.innerHTML = '<p style="text-align:center; color:#666; margin-top:50px;">Your basket is empty.</p>';
+    totalElement.innerText = "R 0.00";
+    if(cartCount) cartCount.innerText = "0";
+    return;
+}
 
 
 
