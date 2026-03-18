@@ -562,6 +562,21 @@ function checkout() {
 
 
 
+function removeItem(index) {
+    // 1. Get the current list
+    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+    
+    // 2. Remove the specific item at that index
+    cart.splice(index, 1);
+    
+    // 3. Save the new shorter list back to memory
+    localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
+    
+    // 4. Refresh the UI so the item disappears instantly
+    renderCart();
+}
+
+
 
 </script>
 
