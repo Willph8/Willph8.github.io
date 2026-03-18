@@ -423,34 +423,40 @@ function toggleCart() {
   renderCart();
 }
 
+
 function renderCart() {
-  const list = document.getElementById('cart-items-list');
-  const count = document.getElementById('cart-count');
-  const totalDisplay = document.getElementById('cart-total-amount');
-  
-  list.innerHTML = '';
-  let total = 0;
+    const container = document.getElementById('cart-items-container');
+    const totalElement = document.getElementById('cart-total');
+    const cartCount = document.getElementById('cart-count'); // The little number on the icon
+    
+    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+    
+    container.innerHTML = ''; 
+    let total = 0;
 
-  cart.forEach((item, index) => {
-    // Basic math: remove "R " and commas to calculate total
-    const priceNum = parseFloat(item.price.replace('R ', '').replace(',', ''));
-    total += priceNum;
+    cart.forEach((item, index) => {
+        // Clean the price string (e.g., "R 450.00" -> 450.00)
+        const priceNum = parseFloat(item.price.replace(/[^\d.]/g, ''));
+        total += priceNum;
 
-    list.innerHTML += `
-      <div class="cart-item">
-        <div>
-          <div style="font-weight:bold">${item.name}</div>
-          <div style="color:var(--00ff88)">${item.price}</div>
-        </div>
-        <button onclick="removeFromCart(${index})" style="background:none; color:red; border:none; cursor:pointer;">Remove</button>
-      </div>
-    `;
-  });
+        container.innerHTML += `
+            <div class="cart-item" style="display:flex; align-items:center; gap:10px; padding:10px; border-bottom:1px solid #333;">
+                <div style="width:50px; height:50px; background:#444; border-radius:5px; background-image:url('${item.image}'); background-size:cover;"></div>
+                <div style="flex:1">
+                    <p style="margin:0; font-size:14px; font-weight:bold;">${item.name}</p>
+                    <p style="margin:0; color:#00ff88; font-size:13px;">${item.price}</p>
+                </div>
+                <button onclick="removeItem(${index})" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:18px;">&times;</button>
+            </div>
+        `;
+    });
 
-  count.innerText = cart.length;
-  totalDisplay.innerText = `R ${total.toFixed(2)}`;
-  localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
+    // Update the Total and the Badge count
+    totalElement.innerText = `R ${total.toFixed(2)}`;
+    if(cartCount) cartCount.innerText = cart.length;
 }
+
+
 
 function removeFromCart(index) {
   cart.splice(index, 1);
