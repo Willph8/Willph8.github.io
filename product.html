@@ -228,6 +228,53 @@ function addToCart() {
     }
 }
 
+// Define 'item' at the top so the whole script can see it
+let item = null; 
+let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+
+async function loadDetail() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+
+    const response = await fetch('products.json');
+    const products = await response.json();
+
+    // Assign the found product to our global 'item' variable
+    item = products.find(p => p.id == productId);
+
+    if (item) {
+        document.getElementById('product-details').innerHTML = `
+            <div class="detail-img" style="background-image: url('${item.image}'); background-size: cover;"></div>
+            <div class="info">
+                <h1>${item.name}</h1>
+                <p class="price">${item.price}</p>
+                <p>Category: ${item.category}</p>
+                <button class="buy-btn" onclick="addToCart()">Add to Basket</button>
+            </div>
+        `;
+    }
+}
+
+function addToCart() {
+    if (item) {
+        // 1. Add the item to our local array
+        cart.push(item);
+        
+        // 2. Save the array to the browser's "Long-term Memory"
+        localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
+        
+        // 3. Update the UI
+        alert("🛒 Added " + item.name + " to your basket!");
+        
+        // 4. Open the sidebar automatically so they see it worked!
+        openCart(); 
+    } else {
+        alert("Error: Product data not loaded yet.");
+    }
+}
+
+// Initialize the page
+loadDetail();
 
 
 
