@@ -232,7 +232,8 @@
       </div>
     </div>
   </div>
-<script>
+
+  <script>  
   const productContainer = document.querySelector('.product-grid');
 
   // Function to load products from our JSON "Database"
@@ -247,16 +248,19 @@
       // Loop through the JSON data and create HTML for each item
       products.forEach(item => {
         const card = `
-          <div class="product-card">
-            <div class="product-img" style="background-image: url('${item.image}'); background-size: cover;">
-              ${item.image ? '' : item.category}
-            </div>
-            <div class="product-info">
-              <div class="price">${item.price}</div>
-              <div class="name">${item.name}</div>
-            </div>
-          </div>
-        `;
+  <a href="product.html?id=${item.id}" style="text-decoration: none; color: inherit;">
+    <div class="product-card">
+      <div class="product-img" style="background-image: url('${item.image}'); background-size: cover;">
+        ${item.image ? '' : item.category}
+      </div>
+      <div class="product-info">
+        <div class="price">${item.price}</div>
+        <div class="name">${item.name}</div>
+      </div>
+    </div>
+  </a>
+`;
+
         productContainer.innerHTML += card;
       });
     } catch (error) {
@@ -275,23 +279,9 @@
     loadProducts();
   }, 9500); 
 
-
-const card = `
-  <a href="product.html?id=${item.id}" style="text-decoration: none; color: inherit;">
-    <div class="product-card">
-      <div class="product-img" style="background-image: url('${item.image}'); background-size: cover;">
-        ${item.image ? '' : item.category}
-      </div>
-      <div class="product-info">
-        <div class="price">${item.price}</div>
-        <div class="name">${item.name}</div>
-      </div>
-    </div>
-  </a>
-`;
-
-</script>
+  </script>
 
 </body>
 </html>
+
 
