@@ -1,34 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>
-            Godiyakum
-        </title>
-        <link rel="stylesheet" href="index.css">
-    </head>
-    <body>
-        <header class="header">
-            <a href="#" class="logo">GodiyakumGo</a>
-            <nav class="navbar">
-                <a href="home.html" class="active">Home</a>
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Portfolio</a>
-                <a href="#">Contact</a>
-            </nav>
-        </header>
-        <section class="home">
-            <div class="home-content">
-                <h1>Hi, I'm Emmanuel Phetogo Mosai</h1>
-                <h3>Full-Stack Developer & Front-End Developer</h3>
-                <p>
-                   Founder of the GodiyakumGo. Click home at the top for more
-                </p>
-                <!--<div class="btn-box">
-                    <a href="#">Lets Talk</a>
-                    <a href="#">Hire Me</a>
-                </div>-->
-            </div>
-        </section>
-    </body>
+<html>
+<head>
+<style>
+  :root {
+    --n-red: #E50914;
+    --n-dark: #8b0000;
+    --card-bg: #1a1a1a;
+  }
+
+  body {
+    background-color: #000;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: white;
+    overflow-x: hidden;
+  }
+
+  /* --- ANIMATION STYLES --- */
+  #intro-container {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+  }
+
+  .word-wrapper {
+    display: flex;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    animation: finalDive 1.5s forwards 8s;
+  }
+
+  .letter {
+    font-size: 80px;
+    font-family: 'Arial Black', sans-serif;
+    color: var(--n-red);
+    opacity: 0;
+    background: linear-gradient(to bottom, var(--n-red), var(--n-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: letterIn 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  /* Timings */
+  .l1 { animation-delay: 0.2s; } .l2 { animation-delay: 0.4s; }
+  .l3 { animation-delay: 0.6s; } .l4 { animation-delay: 0.8s; }
+  .l5 { animation-delay: 1.0s; } .l6 { animation-delay: 1.2s; }
+  .l7 { animation-delay: 1.4s; } .l8 { animation-delay: 1.6s; }
+  .l9 { animation-delay: 1.8s; } .l10 { animation-delay: 2.0s; }
+  .l11 { animation-delay: 2.2s; }
+
+  @keyframes letterIn { 0% { transform: translateZ(-500px) scale(0); opacity: 0; } 100% { transform: translateZ(0) scale(1); opacity: 1; } }
+  @keyframes finalDive { 100% { transform: scale(60); opacity: 0; visibility: hidden; } }
+
+  /* --- SEARCH & STOREFRONT INTERFACE --- */
+  #search-interface {
+    display: none; 
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 40px 20px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+
+  .logo-small {
+    font-size: 42px;
+    font-family: 'Arial Black', sans-serif;
+    margin-bottom: 25px;
+    background: linear-gradient(to right, var(--n-red), #ff4d4d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .search-box {
+    width: 90%;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 50px;
+    padding: 5px 10px 5px 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+    margin-bottom: 50px;
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .search-btn {
+    background: var(--n-red);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* --- PRODUCT GRID --- */
+  .grid-title {
+    width: 90%;
+    max-width: 1000px;
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--n-red);
+    padding-left: 15px;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    width: 90%;
+    max-width: 1000px;
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    border: 1px solid #333;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--n-red);
+  }
+
+  .product-img {
+    width: 100%;
+    height: 180px;
+    background: #333; /* Placeholder */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-weight: bold;
+  }
+
+  .product-info {
+    padding: 15px;
+  }
+
+  .price {
+    color: #00ff88;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .name {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #ccc;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+  <div id="intro-container">
+    <div class="word-wrapper">
+      <span class="letter l1">G</span><span class="letter l2">o</span>
+      <span class="letter l3">d</span><span class="letter l4">i</span>
+      <span class="letter l5">y</span><span class="letter l6">a</span>
+      <span class="letter l7">k</span><span class="letter l8">u</span>
+      <span class="letter l9">m</span><span class="letter l10">G</span>
+      <span class="letter l11">o</span>
+    </div>
+  </div>
+
+  <div id="search-interface">
+    <h1 class="logo-small">GodiyakumGo</h1>
+    <div class="search-box">
+      <input type="text" placeholder="Search brands, products, deals...">
+      <button class="search-btn">Search</button>
+    </div>
+
+    <h2 class="grid-title">Trending in South Africa</h2>
+    
+    <div class="product-grid">
+      <!-- Item 1 -->
+      <div class="product-card">
+        <div class="product-img">GADGET</div>
+        <div class="product-info">
+          <div class="price">R 450.00</div>
+          <div class="name">Smart Wireless Buds</div>
+        </div>
+      </div>
+      <!-- Item 2 -->
+      <div class="product-card">
+        <div class="product-img">FASHION</div>
+        <div class="product-info">
+          <div class="price">R 899.00</div>
+          <div class="name">Urban Streetwear Hoodie</div>
+        </div>
+      </div>
+      <!-- Item 3 -->
+      <div class="product-card">
+        <div class="product-img">TECH</div>
+        <div class="product-info">
+          <div class="price">R 1,200.00</div>
+          <div class="name">Ultra HD Smart Watch</div>
+        </div>
+      </div>
+      <!-- Item 4 -->
+      <div class="product-card">
+        <div class="product-img">HOME</div>
+        <div class="product-info">
+          <div class="price">R 250.00</div>
+          <div class="name">LED Room Lighting Kit</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('intro-container').style.display = 'none';
+      document.getElementById('search-interface').style.display = 'flex';
+      document.body.style.overflowY = "auto"; // Enable scrolling after intro
+      document.body.style.justifyContent = "flex-start"; // Align to top
+    }, 9500); 
+  </script>
+
+</body>
 </html>
+
