@@ -307,6 +307,30 @@
 </div>
 
 
+<!-- The Sidebar Container -->
+<div id="cart-sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h2>Your Basket</h2>
+        <button onclick="closeCart()" class="close-btn">&times;</button>
+    </div>
+    
+    <!-- This div is where JS will 'inject' the products -->
+    <div id="cart-items-container"></div>
+
+    <div class="sidebar-footer">
+        <hr>
+        <div class="total-row">
+            <span>Total:</span>
+            <span id="cart-total">R 0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">Checkout via WhatsApp</button>
+    </div>
+</div>
+
+<!-- Dark overlay that appears when cart is open -->
+<div id="cart-overlay" onclick="closeCart()"></div>
+
+
 
 
 <script>
