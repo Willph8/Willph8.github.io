@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { background: #000; color: white; font-family: sans-serif; padding: 20px; }
+  .container { max-width: 800px; margin: auto; display: flex; gap: 40px; }
+  .detail-img { width: 400px; height: 400px; background: #333; border-radius: 15px; }
+  .info { flex: 1; }
+  .price { color: #00ff88; font-size: 32px; font-weight: bold; }
+  .buy-btn { 
+    background: #E50914; color: white; border: none; 
+    padding: 15px 30px; font-size: 18px; border-radius: 30px; 
+    cursor: pointer; width: 100%; margin-top: 20px;
+  }
+  .back-link { color: #ccc; text-decoration: none; display: block; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+  <a href="index.html" class="back-link">← Back to GodiyakumGo</a>
+
+  <div class="container" id="product-details">
+    <!-- Content will be loaded by JavaScript -->
+    <p>Loading product...</p>
+  </div>
+
+  <script>
+    async function loadDetail() {
+      // 1. Get the ID from the URL (?id=1)
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+
+      // 2. Fetch the same JSON file
+      const response = await fetch('products.json');
+      const products = await response.json();
+
+      // 3. Find the product that matches the ID
+      const item = products.find(p => p.id == productId);
+
+      if (item) {
+        document.getElementById('product-details').innerHTML = `
+          <div class="detail-img" style="background-image: url('${item.image}'); background-size: cover;"></div>
+          <div class="info">
+            <h1>${item.name}</h1>
+            <p class="price">${item.price}</p>
+            <p>Category: ${item.category}</p>
+            <p style="color: #aaa;">Free shipping to South Africa. High quality guaranteed.</p>
+            <button class="buy-btn" onclick="addToCart(${item.id})">Add to Cart</button>
+          </div>
+        `;
+      }
+    }
+
+    function addToCart(id) {
+        alert("Item " + id + " added to cart! (We will build the cart next)");
+    }
+
+    loadDetail();
+  </script>
+</body>
+</html>
