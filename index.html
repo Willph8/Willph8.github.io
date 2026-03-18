@@ -463,6 +463,56 @@ function removeFromCart(index) {
 renderCart();
 
 
+// 1. Open/Close Functions
+function openCart() {
+    document.getElementById('cart-sidebar').classList.add('active');
+    document.getElementById('cart-overlay').classList.add('active');
+    renderCart(); // Refresh the list of items
+}
+
+function closeCart() {
+    document.getElementById('cart-sidebar').classList.remove('active');
+    document.getElementById('cart-overlay').classList.remove('active');
+}
+
+// 2. The Rendering Logic
+function renderCart() {
+    const container = document.getElementById('cart-items-container');
+    const totalElement = document.getElementById('cart-total');
+    
+    // Get items from browser memory
+    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+    
+    container.innerHTML = ''; // Clear old list
+    let total = 0;
+
+    if (cart.length === 0) {
+        container.innerHTML = '<p style="text-align:center; margin-top:50px;">Your cart is empty</p>';
+    } else {
+        cart.forEach((item, index) => {
+            total += parseFloat(item.price.replace('R ', '').replace(',', ''));
+            container.innerHTML += `
+                <div class="cart-item" style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid #333;">
+                    <div>
+                        <p style="margin:0; font-weight:bold;">${item.name}</p>
+                        <p style="margin:0; color:#00ff88;">${item.price}</p>
+                    </div>
+                    <button onclick="removeItem(${index})" style="color:red; background:none; border:none; cursor:pointer;">Remove</button>
+                </div>
+            `;
+        });
+    }
+    totalElement.innerText = `R ${total.toFixed(2)}`;
+}
+
+function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+    cart.splice(index, 1); // Remove item from array
+    localStorage.setItem('godiyakum_cart', JSON.stringify(cart)); // Save back to memory
+    renderCart(); // Update UI
+}
+
+
 
 </script>
 
