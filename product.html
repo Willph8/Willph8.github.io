@@ -213,7 +213,7 @@
     let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
     if (cart.length === 0) return alert("Empty!");
     let msg = "Order from GodiyakumGo:\n" + cart.map(i => `- ${i.name} (${i.price})`).join('\n');
-    window.open(`https://wa.me/27711593188?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/+27711593188?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   // Initialize
