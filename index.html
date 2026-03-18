@@ -274,6 +274,22 @@
     // Call the function to load products once the UI is visible
     loadProducts();
   }, 9500); 
+
+
+const card = `
+  <a href="product.html?id=${item.id}" style="text-decoration: none; color: inherit;">
+    <div class="product-card">
+      <div class="product-img" style="background-image: url('${item.image}'); background-size: cover;">
+        ${item.image ? '' : item.category}
+      </div>
+      <div class="product-info">
+        <div class="price">${item.price}</div>
+        <div class="name">${item.name}</div>
+      </div>
+    </div>
+  </a>
+`;
+
 </script>
 
 </body>
