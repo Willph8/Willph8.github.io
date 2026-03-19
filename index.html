@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GodiyakumGo | Experience</title>
 <style>
   :root {
     --n-red: #E50914;
@@ -29,7 +32,8 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    z-index: 100;
+    z-index: 3000;
+    background: #000;
   }
 
   .word-wrapper {
@@ -50,7 +54,6 @@
     animation: letterIn 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
-  /* Timings */
   .l1 { animation-delay: 0.2s; } .l2 { animation-delay: 0.4s; }
   .l3 { animation-delay: 0.6s; } .l4 { animation-delay: 0.8s; }
   .l5 { animation-delay: 1.0s; } .l6 { animation-delay: 1.2s; }
@@ -61,13 +64,13 @@
   @keyframes letterIn { 0% { transform: translateZ(-500px) scale(0); opacity: 0; } 100% { transform: translateZ(0) scale(1); opacity: 1; } }
   @keyframes finalDive { 100% { transform: scale(60); opacity: 0; visibility: hidden; } }
 
-  /* --- SEARCH & STOREFRONT INTERFACE --- */
+  /* --- MAIN INTERFACE --- */
   #search-interface {
     display: none; 
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 40px 20px;
+    padding: 80px 20px 40px 20px;
     opacity: 0;
     animation: fadeIn 1s forwards;
   }
@@ -93,13 +96,7 @@
     margin-bottom: 50px;
   }
 
-  input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    color: #333;
-  }
+  input { flex: 1; border: none; outline: none; font-size: 16px; color: #333; }
 
   .search-btn {
     background: var(--n-red);
@@ -111,149 +108,99 @@
     font-weight: bold;
   }
 
-  /* --- PRODUCT GRID --- */
-  .grid-title {
-    width: 90%;
-    max-width: 1000px;
-    text-align: left;
-    font-size: 20px;
-    margin-bottom: 20px;
-    border-left: 4px solid var(--n-red);
-    padding-left: 15px;
-  }
-
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    width: 90%;
-    max-width: 1000px;
-  }
-
-  .product-card {
-    background: var(--card-bg);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s;
-    border: 1px solid #333;
-  }
-
-  .product-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--n-red);
-  }
-
-  .product-img {
-    width: 100%;
-    height: 180px;
-    background: #333; /* Placeholder */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #555;
-    font-weight: bold;
-  }
-
-  .product-info {
-    padding: 15px;
-  }
-
-  .price {
-    color: #00ff88;
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  .name {
-    font-size: 14px;
-    margin: 5px 0;
-    color: #ccc;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
-#cart-icon {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: var(--n-red);
-  padding: 15px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 1001;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-}
-
-#cart-count {
-  background: white;
-  color: black;
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 10px;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
-
-#cart-sidebar {
-  position: fixed;
-  right: -350px; /* Hidden by default */
-  top: 0;
-  width: 350px;
-  height: 100%;
-  background: #111;
-  box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-  transition: 0.3s;
-  z-index: 1002;
-  overflow-y: auto;
-}
-
-#cart-sidebar.open {
-  right: 0;
-}
-
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  background: #222;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-
-.sidebar {
+  /* --- SIDEBARS COMMON --- */
+  .sidebar {
     position: fixed;
     top: 0;
-    right: -100%; /* Start completely off-screen */
-    width: 350px;
     height: 100%;
-    background: #1a1a1a;
-    z-index: 2000;
+    width: 320px;
+    background: #111;
+    z-index: 2500;
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
     display: flex;
     flex-direction: column;
-}
+    overflow-y: auto;
+  }
 
-/* When this class is added via JS, the sidebar slides in */
-.sidebar.active {
-    right: 0;
-}
+  .sidebar-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+  }
 
-#cart-overlay.active {
+  /* Right Sidebar (Cart) */
+  #cart-sidebar { right: -350px; }
+  #cart-sidebar.active { right: 0; }
+
+  /* Left Sidebar (Discovery) */
+  #discovery-sidebar { left: -350px; }
+  #discovery-sidebar.active { left: 0; }
+
+  /* Floating Icons */
+  #cart-icon, #discovery-icon {
+    position: fixed;
+    top: 20px;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    background: #222;
+    border: 1px solid #444;
+  }
+  #cart-icon { right: 20px; background: var(--n-red); }
+  #discovery-icon { left: 20px; border-color: var(--n-red); }
+
+  #cart-count {
+    background: white;
+    color: black;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  /* --- DISCOVERY CONTENT --- */
+  .discovery-content { padding: 20px; }
+  .widget { margin-bottom: 25px; }
+  .widget h3 { color: var(--n-red); font-size: 16px; margin-bottom: 10px; }
+  .widget-box { background: #1a1a1a; padding: 10px; border-radius: 8px; font-size: 13px; border: 1px solid #333; }
+  .news-list { list-style: none; padding: 0; margin: 0; }
+  .news-list li { padding: 8px 0; border-bottom: 1px solid #222; font-size: 13px; color: #ccc; }
+
+  /* --- PRODUCT GRID --- */
+  .grid-title { width: 90%; max-width: 1000px; text-align: left; font-size: 20px; margin-bottom: 20px; border-left: 4px solid var(--n-red); padding-left: 15px; }
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; width: 90%; max-width: 1000px; }
+  .product-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #333; cursor: pointer; }
+  .product-card:hover { transform: translateY(-5px); border-color: var(--n-red); }
+  .product-img { width: 100%; height: 180px; background: #333; display: flex; align-items: center; justify-content: center; color: #555; font-weight: bold; background-size: cover; background-position: center; }
+  .product-info { padding: 15px; }
+  .price { color: #00ff88; font-size: 18px; font-weight: bold; }
+  .name { font-size: 14px; margin: 5px 0; color: #ccc; }
+
+  /* Overlay */
+  #overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.7);
-    z-index: 1999;
-}
+    display: none;
+    z-index: 1500;
+  }
+  #overlay.active { display: block; }
 
+  .checkout-btn { background: var(--n-red); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
+  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
 
+  <!-- Intro Animation -->
   <div id="intro-container">
     <div class="word-wrapper">
       <span class="letter l1">G</span><span class="letter l2">o</span>
@@ -265,6 +212,15 @@
     </div>
   </div>
 
+  <!-- Discovery Icon (Left) -->
+  <div id="discovery-icon" onclick="toggleDiscovery()">🌍</div>
+
+  <!-- Cart Icon (Right) -->
+  <div id="cart-icon" onclick="toggleCart()">
+    🛒 <span id="cart-count">0</span>
+  </div>
+
+  <!-- Main Content -->
   <div id="search-interface">
     <h1 class="logo-small">GodiyakumGo</h1>
     <div class="search-box">
@@ -273,307 +229,176 @@
     </div>
 
     <h2 class="grid-title">Trending in South Africa</h2>
-    
-    <div class="product-grid">
-      <!-- Item 1 -->
-      <div class="product-card">
-        <div class="product-img">GADGET</div>
-        <div class="product-info">
-          <div class="price">R 450.00</div>
-          <div class="name">Smart Wireless Buds</div>
+    <div id="product-grid" class="product-grid">
+      <!-- Products loaded via JS -->
+    </div>
+  </div>
+
+  <!-- Left Sidebar: Discovery -->
+  <div id="discovery-sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h2>Discovery</h2>
+      <button onclick="toggleDiscovery()" style="background:none; color:white; border:none; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+    <div class="discovery-content">
+      <div class="widget">
+        <h3>🏆 Sports</h3>
+        <div class="widget-box">
+          <p>⚽ Pirates vs Chiefs - Sat 15:00</p>
+          <p>🏉 Springboks vs Ireland - Live</p>
         </div>
       </div>
-      <!-- Item 2 -->
-      <div class="product-card">
-        <div class="product-img">FASHION</div>
-        <div class="product-info">
-          <div class="price">R 899.00</div>
-          <div class="name">Urban Streetwear Hoodie</div>
-        </div>
+      <div class="widget">
+        <h3>📰 Top News</h3>
+        <ul class="news-list">
+          <li>• New Tech Hub opens in Jozi</li>
+          <li>• Solar tax rebates extended</li>
+          <li>• SA Designers hit Paris Fashion Week</li>
+        </ul>
       </div>
-      <!-- Item 3 -->
-      <div class="product-card">
-        <div class="product-img">TECH</div>
-        <div class="product-info">
-          <div class="price">R 1,200.00</div>
-          <div class="name">Ultra HD Smart Watch</div>
-        </div>
+      <div class="widget">
+        <h3>🎵 Amapiano Hits</h3>
+        <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6G9S399vT8G?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
-      <!-- Item 4 -->
-      <div class="product-card">
-        <div class="product-img">HOME</div>
-        <div class="product-info">
-          <div class="price">R 250.00</div>
-          <div class="name">LED Room Lighting Kit</div>
-        </div>
+      <div class="widget">
+        <h3>📺 Featured</h3>
+        <iframe width="100%" height="150" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
-
-<!-- Floating Cart Icon -->
-<div id="cart-icon" onclick="toggleCart()">
-  🛒 <span id="cart-count">0</span>
-</div>
-
-<!-- Sliding Sidebar -->
-<div id="cart-sidebar">
-  <div style="padding: 20px;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <h2>Your Cart</h2>
+  <!-- Right Sidebar: Cart -->
+  <div id="cart-sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h2>Your Basket</h2>
       <button onclick="toggleCart()" style="background:none; color:white; border:none; font-size:24px; cursor:pointer;">&times;</button>
     </div>
-    <hr border="0.5px solid #333">
-    <div id="cart-items-list">
-      <!-- Items will appear here -->
-    </div>
-    <div id="cart-total-section" style="margin-top: 20px;">
-      <h3>Total: <span id="cart-total-amount">R 0.00</span></h3>
-      <button class="buy-btn" style="width:100%">Checkout via WhatsApp</button>
+    <div id="cart-items-container" style="flex:1; padding:20px;"></div>
+    <div style="padding:20px; border-top:1px solid #333;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+        <span>Total:</span>
+        <span id="cart-total">R 0.00</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">Checkout via WhatsApp</button>
     </div>
   </div>
-</div>
 
+  <div id="overlay" onclick="closeAll()"></div>
 
-<!-- The Sidebar Container -->
-<div id="cart-sidebar" class="sidebar">
-    <div class="sidebar-header">
-        <h2>Your Basket</h2>
-        <button onclick="closeCart()" class="close-btn">&times;</button>
-    </div>
-    
-    <!-- This div is where JS will 'inject' the products -->
-    <div id="cart-items-container"></div>
+  <script>
+    const introContainer = document.getElementById('intro-container');
+    const searchInterface = document.getElementById('search-interface');
+    const productGrid = document.getElementById('product-grid');
 
-    <div class="sidebar-footer">
-        <hr>
-        <div class="total-row">
-            <span>Total:</span>
-            <span id="cart-total">R 0.00</span>
+    // Sample Products
+    const products = [
+      { id: 1, name: "Smart Wireless Buds", price: "R 450.00", category: "GADGET" },
+      { id: 2, name: "Urban Streetwear Hoodie", price: "R 899.00", category: "FASHION" },
+      { id: 3, name: "Ultra HD Smart Watch", price: "R 1,200.00", category: "TECH" },
+      { id: 4, name: "LED Room Lighting Kit", price: "R 250.00", category: "HOME" }
+    ];
+
+    function loadProducts() {
+      productGrid.innerHTML = products.map(item => `
+        <div class="product-card" onclick="addToCart('${item.name}', '${item.price}')">
+          <div class="product-img">${item.category}</div>
+          <div class="product-info">
+            <div class="price">${item.price}</div>
+            <div class="name">${item.name}</div>
+            <small style="color:gray">Tap to add</small>
+          </div>
         </div>
-        <button class="checkout-btn" onclick="checkout()">Checkout via WhatsApp</button>
-    </div>
-</div>
+      `).join('');
+    }
 
-<!-- Dark overlay that appears when cart is open -->
-<div id="cart-overlay" onclick="closeCart()"></div>
-
-
-<script>
-  const introContainer = document.getElementById('intro-container');
-  const searchInterface = document.getElementById('search-interface');
-  const productContainer = document.querySelector('.product-grid');
-
-  // 1. Function to load products
-  async function loadProducts() {
-    try {
-      const response = await fetch('products.json');
-      const products = await response.json();
-      productContainer.innerHTML = '';
-      products.forEach(item => {
-        const card = `
-          <a href="product.html?id=${item.id}" style="text-decoration: none; color: inherit;">
-            <div class="product-card">
-              <div class="product-img" style="background-image: url('${item.image}'); background-size: cover;">
-                ${item.image ? '' : item.category}
-              </div>
-              <div class="product-info">
-                <div class="price">${item.price}</div>
-                <div class="name">${item.name}</div>
-              </div>
-            </div>
-          </a>
-        `;
-        productContainer.innerHTML += card;
-      });
-    } catch (e) { console.error(e); }
-  }
-
-  // 2. Logic to Skip Intro if already seen
-  const hasSeenIntro = localStorage.getItem('visitedBefore');
-
-  if (hasSeenIntro) {
-    // SKIP ANIMATION: Show store immediately
-    introContainer.style.display = 'none';
-    searchInterface.style.display = 'flex';
-    document.body.style.overflowY = "auto";
-    document.body.style.justifyContent = "flex-start";
-    document.body.style.backgroundColor = "#111";
-    loadProducts();
-  } else {
-    // PLAY ANIMATION: First time visit
-    setTimeout(() => {
+    // Intro Logic
+    if (localStorage.getItem('visitedBefore')) {
       introContainer.style.display = 'none';
       searchInterface.style.display = 'flex';
-      document.body.style.overflowY = "auto";
-      document.body.style.justifyContent = "flex-start";
-      document.body.style.backgroundColor = "#111";
-      
-      // Save to memory so it doesn't play again
-      localStorage.setItem('visitedBefore', 'true');
-      
       loadProducts();
-    }, 9500); 
-  }
-
-let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-
-function toggleCart() {
-  document.getElementById('cart-sidebar').classList.toggle('open');
-  renderCart();
-}
-
-
-function renderCart() {
-    const container = document.getElementById('cart-items-container');
-    const totalElement = document.getElementById('cart-total');
-    const cartCount = document.getElementById('cart-count'); // The little number on the icon
-    
-    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-    
-    container.innerHTML = ''; 
-    let total = 0;
-
-    cart.forEach((item, index) => {
-        // Clean the price string (e.g., "R 450.00" -> 450.00)
-        const priceNum = parseFloat(item.price.replace(/[^\d.]/g, ''));
-        total += priceNum;
-
-        container.innerHTML += `
-            <div class="cart-item" style="display:flex; align-items:center; gap:10px; padding:10px; border-bottom:1px solid #333;">
-                <div style="width:50px; height:50px; background:#444; border-radius:5px; background-image:url('${item.image}'); background-size:cover;"></div>
-                <div style="flex:1">
-                    <p style="margin:0; font-size:14px; font-weight:bold;">${item.name}</p>
-                    <p style="margin:0; color:#00ff88; font-size:13px;">${item.price}</p>
-                </div>
-                <button onclick="removeItem(${index})" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:18px;">&times;</button>
-            </div>
-        `;
-    });
-
-    // Update the Total and the Badge count
-    totalElement.innerText = `R ${total.toFixed(2)}`;
-    if(cartCount) cartCount.innerText = cart.length;
-}
-
-
-
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  renderCart();
-}
-
-// Run on page load to update icon count
-renderCart();
-
-
-// 1. Open/Close Functions
-function openCart() {
-    document.getElementById('cart-sidebar').classList.add('active');
-    document.getElementById('cart-overlay').classList.add('active');
-    renderCart(); // Refresh the list of items
-}
-
-function closeCart() {
-    document.getElementById('cart-sidebar').classList.remove('active');
-    document.getElementById('cart-overlay').classList.remove('active');
-}
-
-
-
-// 2. The Rendering Logic
-function renderCart() {
-    const container = document.getElementById('cart-items-container');
-    const totalElement = document.getElementById('cart-total');
-    
-    // Get items from browser memory
-    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-    
-    container.innerHTML = ''; // Clear old list
-    let total = 0;
-
-    if (cart.length === 0) {
-        container.innerHTML = '<p style="text-align:center; margin-top:50px;">Your cart is empty</p>';
     } else {
-        cart.forEach((item, index) => {
-            total += parseFloat(item.price.replace('R ', '').replace(',', ''));
-            container.innerHTML += `
-                <div class="cart-item" style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid #333;">
-                    <div>
-                        <p style="margin:0; font-weight:bold;">${item.name}</p>
-                        <p style="margin:0; color:#00ff88;">${item.price}</p>
-                    </div>
-                    <button onclick="removeItem(${index})" style="color:red; background:none; border:none; cursor:pointer;">Remove</button>
-                </div>
-            `;
-        });
-    }
-    totalElement.innerText = `R ${total.toFixed(2)}`;
-}
-
-
-
-function removeItem(index) {
-    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-    cart.splice(index, 1); // Remove item from array
-    localStorage.setItem('godiyakum_cart', JSON.stringify(cart)); // Save back to memory
-    renderCart(); // Update UI
-}
-
-
-function checkout() {
-    // 1. Get the items from memory
-    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-    
-    if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
+      setTimeout(() => {
+        introContainer.style.display = 'none';
+        searchInterface.style.display = 'flex';
+        localStorage.setItem('visitedBefore', 'true');
+        loadProducts();
+      }, 9500);
     }
 
-    // 2. Build the message string
-    let message = "Hello GodiyakumGo! I would like to order:\n\n";
-    let total = 0;
+    // Sidebar Logic
+    function toggleDiscovery() {
+      closeAll();
+      document.getElementById('discovery-sidebar').classList.toggle('active');
+      document.getElementById('overlay').classList.add('active');
+    }
 
-    cart.forEach((item, index) => {
-        message += `${index + 1}. *${item.name}* - ${item.price}\n`;
-        // Calculate total for the message
-        total += parseFloat(item.price.replace('R ', '').replace(',', ''));
-    });
+    function toggleCart() {
+      closeAll();
+      document.getElementById('cart-sidebar').classList.toggle('active');
+      document.getElementById('overlay').classList.add('active');
+      renderCart();
+    }
 
-    message += `\n*Total Amount: R ${total.toFixed(2)}*`;
-    message += "\n\nPlease let me know the payment details!";
+    function closeAll() {
+      document.getElementById('cart-sidebar').classList.remove('active');
+      document.getElementById('discovery-sidebar').classList.remove('active');
+      document.getElementById('overlay').classList.remove('active');
+    }
 
-    // 3. Encode the message for a URL
-    const encodedMessage = encodeURIComponent(message);
-    
-    // 4. Open WhatsApp (Replace 27123456789 with your number)
-    const whatsappNumber = "+27711593188"; 
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-}
+    // Cart Logic
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+      cart.push({ name, price });
+      localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
+      renderCart();
+      alert(name + " added to basket!");
+    }
 
+    function renderCart() {
+      const container = document.getElementById('cart-items-container');
+      const totalElement = document.getElementById('cart-total');
+      const countElement = document.getElementById('cart-count');
+      let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+      
+      container.innerHTML = cart.length === 0 ? '<p>Empty basket</p>' : '';
+      let total = 0;
 
+      cart.forEach((item, index) => {
+        total += parseFloat(item.price.replace(/[^\d.]/g, ''));
+        container.innerHTML += `
+          <div style="display:flex; justify-content:space-between; margin-bottom:15px; background:#222; padding:10px; border-radius:8px;">
+            <div>
+              <p style="margin:0; font-size:14px;">${item.name}</p>
+              <p style="margin:0; color:#00ff88;">${item.price}</p>
+            </div>
+            <button onclick="removeItem(${index})" style="color:red; background:none; border:none; cursor:pointer;">&times;</button>
+          </div>
+        `;
+      });
 
-function removeItem(index) {
-    // 1. Get the current list
-    let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-    
-    // 2. Remove the specific item at that index
-    cart.splice(index, 1);
-    
-    // 3. Save the new shorter list back to memory
-    localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
-    
-    // 4. Refresh the UI so the item disappears instantly
+      totalElement.innerText = `R ${total.toFixed(2)}`;
+      countElement.innerText = cart.length;
+    }
+
+    function removeItem(index) {
+      let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function checkout() {
+      let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
+      if (cart.length === 0) return alert("Cart is empty");
+      
+      let message = "Hello GodiyakumGo! I want to order:\n";
+      cart.forEach((item, i) => message += `${i+1}. ${item.name} (${item.price})\n`);
+      
+      const whatsappNumber = "27711593188"; 
+      window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
     renderCart();
-}
-
-
-
-
-</script>
-
-
+  </script>
 </body>
 </html>
-
-
