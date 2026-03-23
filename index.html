@@ -1,404 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GodiyakumGo | Experience</title>
-<style>
-  :root {
-    --n-red: #E50914;
-    --n-dark: #8b0000;
-    --card-bg: #1a1a1a;
-  }
-
-  body {
-    background-color: #000;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    color: white;
-    overflow-x: hidden;
-  }
-
-  /* --- ANIMATION STYLES --- */
-  #intro-container {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    z-index: 3000;
-    background: #000;
-  }
-
-  .word-wrapper {
-    display: flex;
-    perspective: 1200px;
-    transform-style: preserve-3d;
-    animation: finalDive 1.5s forwards 8s;
-  }
-
-  .letter {
-    font-size: 80px;
-    font-family: 'Arial Black', sans-serif;
-    color: var(--n-red);
-    opacity: 0;
-    background: linear-gradient(to bottom, var(--n-red), var(--n-dark));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: letterIn 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .l1 { animation-delay: 0.2s; } .l2 { animation-delay: 0.4s; }
-  .l3 { animation-delay: 0.6s; } .l4 { animation-delay: 0.8s; }
-  .l5 { animation-delay: 1.0s; } .l6 { animation-delay: 1.2s; }
-  .l7 { animation-delay: 1.4s; } .l8 { animation-delay: 1.6s; }
-  .l9 { animation-delay: 1.8s; } .l10 { animation-delay: 2.0s; }
-  .l11 { animation-delay: 2.2s; }
-
-  @keyframes letterIn { 0% { transform: translateZ(-500px) scale(0); opacity: 0; } 100% { transform: translateZ(0) scale(1); opacity: 1; } }
-  @keyframes finalDive { 100% { transform: scale(60); opacity: 0; visibility: hidden; } }
-
-  /* --- MAIN INTERFACE --- */
-  #search-interface {
-    display: none; 
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 80px 20px 40px 20px;
-    opacity: 0;
-    animation: fadeIn 1s forwards;
-  }
-
-  .logo-small {
-    font-size: 42px;
-    font-family: 'Arial Black', sans-serif;
-    margin-bottom: 25px;
-    background: linear-gradient(to right, var(--n-red), #ff4d4d);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .search-box {
-    width: 90%;
-    max-width: 600px;
-    background: #fff;
-    border-radius: 50px;
-    padding: 5px 10px 5px 25px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
-    margin-bottom: 50px;
-  }
-
-  input { flex: 1; border: none; outline: none; font-size: 16px; color: #333; }
-
-  .search-btn {
-    background: var(--n-red);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 40px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  /* --- SIDEBARS COMMON --- */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    height: 100%;
-    width: 320px;
-    background: #111;
-    z-index: 2500;
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-
-  .sidebar-header {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #333;
-  }
-
-  /* Right Sidebar (Cart) */
-  #cart-sidebar { right: -350px; }
-  #cart-sidebar.active { right: 0; }
-
-  /* Left Sidebar (Discovery) */
-  #discovery-sidebar { left: -350px; }
-  #discovery-sidebar.active { left: 0; }
-
-  /* Floating Icons */
-  #cart-icon, #discovery-icon {
-    position: fixed;
-    top: 20px;
-    padding: 15px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 1001;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    background: #222;
-    border: 1px solid #444;
-  }
-  #cart-icon { right: 20px; background: var(--n-red); }
-  #discovery-icon { left: 20px; border-color: var(--n-red); }
-
-  #cart-count {
-    background: white;
-    color: black;
-    font-size: 11px;
-    padding: 2px 6px;
-    border-radius: 10px;
-    position: absolute;
-    top: 5px;
-    right: 5px;
-  }
-
-  /* --- DISCOVERY CONTENT --- */
-  .discovery-content { padding: 20px; }
-  .widget { margin-bottom: 25px; }
-  .widget h3 { color: var(--n-red); font-size: 16px; margin-bottom: 10px; }
-  .widget-box { background: #1a1a1a; padding: 10px; border-radius: 8px; font-size: 13px; border: 1px solid #333; }
-  .news-list { list-style: none; padding: 0; margin: 0; }
-  .news-list li { padding: 8px 0; border-bottom: 1px solid #222; font-size: 13px; color: #ccc; }
-
-  /* --- PRODUCT GRID --- */
-  .grid-title { width: 90%; max-width: 1000px; text-align: left; font-size: 20px; margin-bottom: 20px; border-left: 4px solid var(--n-red); padding-left: 15px; }
-  .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; width: 90%; max-width: 1000px; }
-  .product-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid #333; cursor: pointer; }
-  .product-card:hover { transform: translateY(-5px); border-color: var(--n-red); }
-  .product-img { width: 100%; height: 180px; background: #333; display: flex; align-items: center; justify-content: center; color: #555; font-weight: bold; background-size: cover; background-position: center; }
-  .product-info { padding: 15px; }
-  .price { color: #00ff88; font-size: 18px; font-weight: bold; }
-  .name { font-size: 14px; margin: 5px 0; color: #ccc; }
-
-  /* Overlay */
-  #overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    z-index: 1500;
-  }
-  #overlay.active { display: block; }
-
-  .checkout-btn { background: var(--n-red); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-
-  @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-</style>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Hello, World!</title>
+  <link rel="stylesheet" href="styling.css">
 </head>
 <body>
-
-  <!-- Intro Animation -->
-  <div id="intro-container">
-    <div class="word-wrapper">
-      <span class="letter l1">G</span><span class="letter l2">o</span>
-      <span class="letter l3">d</span><span class="letter l4">i</span>
-      <span class="letter l5">y</span><span class="letter l6">a</span>
-      <span class="letter l7">k</span><span class="letter l8">u</span>
-      <span class="letter l9">m</span><span class="letter l10">G</span>
-      <span class="letter l11">o</span>
-    </div>
+  
+  
+<div class="viewport-center">
+  <div class="zoom-wrapper">
+    <h1 class="godiyakumgo-logo">
+      <span>G</span><span>o</span><span>d</span><span>i</span><span>y</span><span>a</span><span>k</span><span>u</span><span>m</span>
+    </h1>
   </div>
-
-  <!-- Discovery Icon (Left) -->
-  <div id="discovery-icon" onclick="toggleDiscovery()">🌍</div>
-
-  <!-- Cart Icon (Right) -->
-  <div id="cart-icon" onclick="toggleCart()">
-    🛒 <span id="cart-count">0</span>
-  </div>
-
-  <!-- Main Content -->
-  <div id="search-interface">
-    <h1 class="logo-small">GodiyakumGo</h1>
-    <div class="search-box">
-      <input type="text" placeholder="Search brands, products, deals...">
-      <button class="search-btn">Search</button>
+</div>
+<!-- 1. The Home Screen (Initially Hidden) -->
+<div id="home-screen" class="hidden">
+  <header>
+    <div class="mini-logo">Godiyakum</div>
+    <div class="user-icon">👤</div>
+  </header>
+  
+  <main>
+    <h2>Your Track List</h2>
+    <div class="track-grid">
+      <!-- You can add more tracks here -->
+      <div class="track-card"><span>1</span> Song Title - Artist</div>
+      <div class="track-card"><span>2</span> High Energy - Beat</div>
+      <div class="track-card"><span>3</span> Cinematic Flow</div>
+      <div class="track-card"><span>4</span> GodiyakumGo Exclusive</div>
     </div>
+  </main>
+</div>
 
-    <h2 class="grid-title">Trending in South Africa</h2>
-    <div id="product-grid" class="product-grid">
-      <!-- Products loaded via JS -->
-    </div>
-  </div>
+<script>
+  // Wait for the intro animation to finish (roughly 4-5 seconds)
+  setTimeout(() => {
+    const intro = document.querySelector('.viewport-center');
+    const home = document.getElementById('home-screen');
+    
+    // Fade out intro
+    intro.style.opacity = '0';
+    intro.style.transition = 'opacity 1s ease';
+    
+    // Show home screen
+    setTimeout(() => {
+      intro.style.display = 'none';
+      home.classList.remove('hidden');
+      home.classList.add('fade-in');
+    }, 1000);
+  }, 4500); // 4.5 seconds matches the logo zoom timing
+</script>
 
-  <!-- Left Sidebar: Discovery -->
-  <div id="discovery-sidebar" class="sidebar">
-    <div class="sidebar-header">
-      <h2>Discovery</h2>
-      <button onclick="toggleDiscovery()" style="background:none; color:white; border:none; font-size:24px; cursor:pointer;">&times;</button>
-    </div>
-    <div class="discovery-content">
-      <div class="widget">
-        <h3>🏆 Sports</h3>
-        <div class="widget-box">
-          <p>⚽ Pirates vs Chiefs - Sat 15:00</p>
-          <p>🏉 Springboks vs Ireland - Live</p>
-        </div>
-      </div>
-      <div class="widget">
-        <h3>📰 Top News</h3>
-        <ul class="news-list">
-          <li>• New Tech Hub opens in Jozi</li>
-          <li>• Solar tax rebates extended</li>
-          <li>• SA Designers hit Paris Fashion Week</li>
-        </ul>
-      </div>
-      <div class="widget">
-        <h3>🎵 Amapiano Hits</h3>
-        <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6G9S399vT8G?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      </div>
-      <div class="widget">
-        <h3>📺 Featured</h3>
-        <iframe width="100%" height="150" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video" frameborder="0" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
-  <!-- Right Sidebar: Cart -->
-  <div id="cart-sidebar" class="sidebar">
-    <div class="sidebar-header">
-      <h2>Your Basket</h2>
-      <button onclick="toggleCart()" style="background:none; color:white; border:none; font-size:24px; cursor:pointer;">&times;</button>
-    </div>
-    <div id="cart-items-container" style="flex:1; padding:20px;"></div>
-    <div style="padding:20px; border-top:1px solid #333;">
-      <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-        <span>Total:</span>
-        <span id="cart-total">R 0.00</span>
-      </div>
-      <button class="checkout-btn" onclick="checkout()">Checkout via WhatsApp</button>
-    </div>
-  </div>
-
-  <div id="overlay" onclick="closeAll()"></div>
-
-  <script>
-    const introContainer = document.getElementById('intro-container');
-    const searchInterface = document.getElementById('search-interface');
-    const productGrid = document.getElementById('product-grid');
-
-    // Sample Products
-    const products = [
-      { id: 1, name: "Smart Wireless Buds", price: "R 450.00", category: "GADGET" },
-      { id: 2, name: "Urban Streetwear Hoodie", price: "R 899.00", category: "FASHION" },
-      { id: 3, name: "Ultra HD Smart Watch", price: "R 1,200.00", category: "TECH" },
-      { id: 4, name: "LED Room Lighting Kit", price: "R 250.00", category: "HOME" }
-    ];
-
-    function loadProducts() {
-      productGrid.innerHTML = products.map(item => `
-        <div class="product-card" onclick="addToCart('${item.name}', '${item.price}')">
-          <div class="product-img">${item.category}</div>
-          <div class="product-info">
-            <div class="price">${item.price}</div>
-            <div class="name">${item.name}</div>
-            <small style="color:gray">Tap to add</small>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // Intro Logic
-    if (localStorage.getItem('visitedBefore')) {
-      introContainer.style.display = 'none';
-      searchInterface.style.display = 'flex';
-      loadProducts();
-    } else {
-      setTimeout(() => {
-        introContainer.style.display = 'none';
-        searchInterface.style.display = 'flex';
-        localStorage.setItem('visitedBefore', 'true');
-        loadProducts();
-      }, 9500);
-    }
-
-    // Sidebar Logic
-    function toggleDiscovery() {
-      closeAll();
-      document.getElementById('discovery-sidebar').classList.toggle('active');
-      document.getElementById('overlay').classList.add('active');
-    }
-
-    function toggleCart() {
-      closeAll();
-      document.getElementById('cart-sidebar').classList.toggle('active');
-      document.getElementById('overlay').classList.add('active');
-      renderCart();
-    }
-
-    function closeAll() {
-      document.getElementById('cart-sidebar').classList.remove('active');
-      document.getElementById('discovery-sidebar').classList.remove('active');
-      document.getElementById('overlay').classList.remove('active');
-    }
-
-    // Cart Logic
-    function addToCart(name, price) {
-      let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-      cart.push({ name, price });
-      localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
-      renderCart();
-      alert(name + " added to basket!");
-    }
-
-    function renderCart() {
-      const container = document.getElementById('cart-items-container');
-      const totalElement = document.getElementById('cart-total');
-      const countElement = document.getElementById('cart-count');
-      let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-      
-      container.innerHTML = cart.length === 0 ? '<p>Empty basket</p>' : '';
-      let total = 0;
-
-      cart.forEach((item, index) => {
-        total += parseFloat(item.price.replace(/[^\d.]/g, ''));
-        container.innerHTML += `
-          <div style="display:flex; justify-content:space-between; margin-bottom:15px; background:#222; padding:10px; border-radius:8px;">
-            <div>
-              <p style="margin:0; font-size:14px;">${item.name}</p>
-              <p style="margin:0; color:#00ff88;">${item.price}</p>
-            </div>
-            <button onclick="removeItem(${index})" style="color:red; background:none; border:none; cursor:pointer;">&times;</button>
-          </div>
-        `;
-      });
-
-      totalElement.innerText = `R ${total.toFixed(2)}`;
-      countElement.innerText = cart.length;
-    }
-
-    function removeItem(index) {
-      let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-      cart.splice(index, 1);
-      localStorage.setItem('godiyakum_cart', JSON.stringify(cart));
-      renderCart();
-    }
-
-    function checkout() {
-      let cart = JSON.parse(localStorage.getItem('godiyakum_cart')) || [];
-      if (cart.length === 0) return alert("Cart is empty");
-      
-      let message = "Hello GodiyakumGo! I want to order:\n";
-      cart.forEach((item, i) => message += `${i+1}. ${item.name} (${item.price})\n`);
-      
-      const whatsappNumber = "27711593188"; 
-      window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
-    }
-
-    renderCart();
-  </script>
+  
 </body>
 </html>
