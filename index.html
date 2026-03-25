@@ -29,7 +29,7 @@
   <a href="music.html" style="text-decoration: none;">
     <div class="track-card"><span>1</span>Music</div>
   </a>
-  <!--<a href="videos.html" style="text-decoration: none;">
+      <!--<a href="videos.html" style="text-decoration: none;">
     <div class="track-card"><span>2</span>Videos</div>
   </a>-->
   <a href="artgallery.html" style="text-decoration: none;">
@@ -43,22 +43,35 @@
   </main>
 </div>
 <script>
-  // Wait for the intro animation to finish (roughly 4-5 seconds)
-  setTimeout(() => {
+ document.addEventListener("DOMContentLoaded", function() {
     const intro = document.querySelector('.viewport-center');
     const home = document.getElementById('home-screen');
     
-    // Fade out intro
-    intro.style.opacity = '0';
-    intro.style.transition = 'opacity 1s ease';
-    
-    // Show home screen
-    setTimeout(() => {
-      intro.style.display = 'none';
-      home.classList.remove('hidden');
-      home.classList.add('fade-in');
-    }, 1000);
-  }, 4500); // 4.5 seconds matches the logo zoom timing
+    // Check if the user has already seen the intro in this session
+    if (sessionStorage.getItem("viewedIntro")) {
+        // SKIP ANIMATION: Hide intro and show home instantly
+        intro.style.display = 'none';
+        home.classList.remove('hidden');
+    } else {
+        // FIRST TIME: Run the animation and set the flag
+        sessionStorage.setItem("viewedIntro", "true");
+
+        setTimeout(() => {
+            // Fade out intro
+            intro.style.opacity = '0';
+            intro.style.transition = 'opacity 1s ease';
+            
+            // Show home screen after fade
+            setTimeout(() => {
+                intro.style.display = 'none';
+                home.classList.remove('hidden');
+                home.classList.add('fade-in');
+            }, 1000);
+        }, 4500); // 4.5 seconds matches your logo zoom timing
+    }
+});
+
+
 </script>
 
   
