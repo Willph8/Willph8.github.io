@@ -27,22 +27,136 @@
             background: var(--netflix-red);
             color: white;
         }
+    .blog-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.blog-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.news-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.news-card {
+  background: #1a1a1a;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image {
+  position: relative;
+  height: 200px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Category Badges */
+.category-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.sports { background: #007bff; color: white; }
+.trending { background: #ff4b2b; color: white; }
+
+.card-content {
+  padding: 20px;
+}
+
+.post-date {
+  color: #666;
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.card-content h3 {
+  color: #fff;
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+}
+
+.card-content p {
+  color: #bbb;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.read-more {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 2px solid #ff4b2b;
+  padding-bottom: 2px;
+}
+
     </style>
 </head>
 <body style="display: block; overflow-y: auto;"> <div class="content-body">
         <a href="index.html" class="back-btn">← Back to Menu</a>
-        
-        <h1 style="color: var(--netflix-red);">GodiyakumGo Exclusive</h1>
-        <p>Your premium GodiyakumGo collection lives here.</p>
-        
-        <div class="track-grid">
-             <div class="track-card">News On Godiyakum</div>
-             <div class="track-card">Weather On Godiyakum</div>
-             <div class="track-card">Sports On Godiyakum</div>
-             <div class="track-card">Drama/Mgozi</div>
-        </div>
-    </div>
+            
+    
+ <div class="blog-container">
+  <header class="blog-header">
+    <h1>GodiyakumGo Exclusive</h1>
+    <p>Latest in Sports, Music & Trends</p>
+  </header>
+
+  <div class="news-grid">
+    <article class="news-card">
+      <div class="card-image">
+        <span class="category-badge sports">Sports</span>
+        <img src="sports-news.jpg" alt="Sports News">
+      </div>
+      <div class="card-content">
+        <span class="post-date">March 25, 2026</span>
+        <h3>The Rise of Local Athletes: Godiyakum Analysis</h3>
+        <p>A deep dive into how new talent is changing the game this season...</p>
+        <a href="#" class="read-more">Read Full Story</a>
+      </div>
+    </article>
+
+    <article class="news-card">
+      <div class="card-image">
+        <span class="category-badge trending">Trending</span>
+        <img src="trending.jpg" alt="Trending News">
+      </div>
+      <div class="card-content">
+        <span class="post-date">March 24, 2026</span>
+        <h3>Big Brother Mzansi: What's Next?</h3>
+        <p>Catch up on the latest drama and highlights from the house today.</p>
+        <a href="#" class="read-more">Read Full Story</a>
+      </div>
+    </article>
+  </div>
+
+  <a href="index.html" class="back-link">← Return to Home</a>
+</div>
+       
 
 </body>
 </html>
+
+
 
