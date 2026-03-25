@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Hello, World!</title>
+  <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+  
+  
+<div class="viewport-center">
+  <div class="zoom-wrapper">
+    <h1 class="godiyakumgo-logo">
+      <span>G</span><span>o</span><span>d</span><span>i</span><span>y</span><span>a</span><span>k</span><span>u</span><span>m</span>
+    </h1>
+  </div>
+</div>
+<!-- 1. The Home Screen (Initially Hidden) -->
+<div id="home-screen" class="hidden">
+  <header>
+    <div class="mini-logo">Godiyakum</div>
+    <div class="user-icon">👤</div>
+  </header>
+  
+  <main>
+    <h2>Your Track List</h2>
+    <div class="track-grid">
+  <a href="music.html" style="text-decoration: none;">
+    <div class="track-card"><span>1</span>Music</div>
+  </a>
+  <!--<a href="videos.html" style="text-decoration: none;">
+    <div class="track-card"><span>2</span>Videos</div>
+  </a>-->
+  <a href="artgallery.html" style="text-decoration: none;">
+    <div class="track-card"><span>3</span>Art Gallery</div>
+  </a>
+  <a href="exclusive.html" style="text-decoration: none;">
+    <div class="track-card"><span>4</span>GodiyakumGo Exclusive</div>
+  </a>
+</div>
+
+  </main>
+</div>
+<script>
+  // Wait for the intro animation to finish (roughly 4-5 seconds)
+  setTimeout(() => {
+    const intro = document.querySelector('.viewport-center');
+    const home = document.getElementById('home-screen');
+    
+    // Fade out intro
+    intro.style.opacity = '0';
+    intro.style.transition = 'opacity 1s ease';
+    
+    // Show home screen
+    setTimeout(() => {
+      intro.style.display = 'none';
+      home.classList.remove('hidden');
+      home.classList.add('fade-in');
+    }, 1000);
+  }, 4500); // 4.5 seconds matches the logo zoom timing
+</script>
+
+  
+</body>
+</html>
