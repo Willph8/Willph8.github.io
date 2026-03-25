@@ -13,6 +13,9 @@ body {
   overflow: hidden;
   font-family: 'Arial Black', 'Helvetica Neue', sans-serif;
 }
+a{
+color: white;
+}
 
 /* Container that handles the slow zoom toward the user */
 .zoom-wrapper {
