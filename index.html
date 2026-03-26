@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
-  <title>Hello, World!</title>
+  <title>GodiyakumGo</title>
   <link rel="stylesheet" href="styling.css">
 </head>
 <body>
-  
-  
+
 <div class="viewport-center">
   <div class="zoom-wrapper">
     <h1 class="godiyakumgo-logo">
@@ -16,64 +14,225 @@
     </h1>
   </div>
 </div>
-<!-- 1. The Home Screen (Initially Hidden) -->
+
 <div id="home-screen" class="hidden">
   <header>
     <div class="mini-logo">Godiyakum</div>
     <div class="user-icon">👤</div>
   </header>
   
+  <div class="stories-container">
+    <div class="story-card"><div class="story-thumb add-story"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"><div class="add-icon">+</div></div></div>
+    <div class="story-card"><div class="story-thumb active"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"></div></div>
+    <div class="story-card"><div class="story-thumb active live"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"><span class="live-badge">LIVE</span></div></div>
+    <div class="story-card"><div class="story-thumb"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80"></div></div>
+  </div>
+
   <main>
-    <h2>Your Track List</h2>
     <div class="track-grid">
-  <a href="music.html" style="text-decoration: none;">
-    <div class="track-card"><span>1</span>Music</div>
-  </a>
-      <!--<a href="videos.html" style="text-decoration: none;">
-    <div class="track-card"><span>2</span>Videos</div>
-  </a>-->
-  <a href="artgallery.html" style="text-decoration: none;">
-    <div class="track-card"><span>3</span>Art Gallery</div>
-  </a>
-  <a href="exclusive.html" style="text-decoration: none;">
-    <div class="track-card"><span>4</span>GodiyakumGo Exclusive</div>
-  </a>
+      <a href="music.html" style="text-decoration: none;"><div class="track-card"><span>1</span>Music</div></a>
+      <a href="artgallery.html" style="text-decoration: none;"><div class="track-card"><span>3</span>Art Gallery</div></a>
+      <a href="exclusive.html" style="text-decoration: none;"><div class="track-card"><span>4</span>GodiyakumGo Exclusive</div></a>
+    </div>
+
+    <div class="post-composer">
+      <div class="composer-top">
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=50&q=80" class="post-avatar">
+        <input type="text" id="composer-input" placeholder="What's on your mind?">
+      </div>
+    </div>
+
+    <div class="news-feed">
+      <div class="feed-post">
+        <div class="post-header">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=50&q=80" class="post-avatar">
+          <div class="post-user-info"><span class="user-name">Creative Studio</span><span class="post-time">2h ago</span></div>
+        </div>
+        <div class="post-content">
+          <p>New Afrobeats track dropping exclusively on GodiyakumGo tomorrow. 🎵</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+<div id="mini-player" class="mini-player-dock hidden">
+  <div class="player-progress-container">
+    <div id="player-progress-bar" class="player-progress-fill"></div>
+  </div>
+  
+  <div class="player-content">
+    <div class="song-info">
+      <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=50&q=80" class="album-art-mini">
+      <div class="text-meta">
+        <span class="song-title">Vibe Check (Exclusive)</span>
+        <span class="artist-name">Godiyakum Artist</span>
+      </div>
+    </div>
+    
+    <div class="player-controls">
+      <button class="play-pause-btn">▶</button>
+    </div>
+  </div>
+</div>
+  
+  
+  
+  <footer class="main-footer">
+    <nav class="footer-nav">
+      <a href="#" class="nav-item active"><span class="nav-icon">🏠</span></a>
+      <a href="#" class="nav-item"><span class="nav-icon">🔍</span></a>
+      <div class="nav-item"><div class="plus-btn">+</div></div>
+      <a href="#" class="nav-item"><span class="nav-icon">🔔</span></a>
+      <a href="#" class="nav-item"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=50&q=80" class="nav-avatar"></a>
+    </nav>
+  </footer>
 </div>
 
-  </main>
+ <div id="story-modal" class="story-modal hidden">
+  <div id="story-bg-blur" class="story-bg-blur"></div>
+  <div id="live-viewer-count" class="viewer-count hidden">👁️ <span id="viewer-number">1.2k</span></div>
+  <div class="modal-content">
+    <div id="progress-container" class="progress-container"></div>
+    <span class="close-story">&times;</span>
+    <div class="nav-zone left" id="nav-left"></div>
+    <div class="nav-zone right" id="nav-right"></div>
+    <div id="story-media-container">
+       <img id="active-story-img" src="" alt="Story">
+       <div id="heart-animation" class="heart-icon">❤️</div>
+    </div>
+    <div class="story-footer">
+      <input type="text" placeholder="Send message..." id="story-reply-input">
+    </div>
+  </div>
 </div>
+
+  
+  
 <script>
- document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
     const intro = document.querySelector('.viewport-center');
     const home = document.getElementById('home-screen');
+    const modal = document.getElementById('story-modal');
+    const closeBtn = document.querySelector('.close-story');
+    const storyImg = document.getElementById('active-story-img');
+    const bgBlur = document.getElementById('story-bg-blur');
+    const progressContainer = document.getElementById('progress-container');
+    const stories = document.querySelectorAll('.story-thumb');
+    const replyInput = document.getElementById('story-reply-input');
+    const composerInput = document.getElementById('composer-input');
+    const newsFeed = document.querySelector('.news-feed');
     
-    // Check if the user has already seen the intro in this session
+    let currentIndex = 0;
+    let storyTimeout;
+
+    // --- INTRO LOGIC ---
     if (sessionStorage.getItem("viewedIntro")) {
-        // SKIP ANIMATION: Hide intro and show home instantly
         intro.style.display = 'none';
         home.classList.remove('hidden');
     } else {
-        // FIRST TIME: Run the animation and set the flag
         sessionStorage.setItem("viewedIntro", "true");
-
         setTimeout(() => {
-            // Fade out intro
             intro.style.opacity = '0';
-            intro.style.transition = 'opacity 1s ease';
-            
-            // Show home screen after fade
             setTimeout(() => {
                 intro.style.display = 'none';
                 home.classList.remove('hidden');
                 home.classList.add('fade-in');
             }, 1000);
-        }, 4500); // 4.5 seconds matches your logo zoom timing
+        }, 4500);
     }
+
+    // --- STORY LOGIC ---
+    stories.forEach((story, index) => {
+        story.addEventListener('click', () => {
+            currentIndex = index;
+            showStory(currentIndex);
+            modal.classList.remove('hidden');
+        });
+    });
+
+    function showStory(index) {
+        clearTimeout(storyTimeout);
+        const imgPath = stories[index].querySelector('img').src;
+        storyImg.src = imgPath;
+        bgBlur.style.backgroundImage = `url('${imgPath}')`;
+
+        progressContainer.innerHTML = '';
+        stories.forEach((_, i) => {
+            const segment = document.createElement('div');
+            segment.className = 'progress-segment' + (i < index ? ' seen-segment' : '') + (i === index ? ' active-segment' : '');
+            const inner = document.createElement('div');
+            inner.className = 'progress-inner';
+            segment.appendChild(inner);
+            progressContainer.appendChild(segment);
+              // Add this inside your showStory function if stories[index] has the 'live' class
+              if (stories[index].classList.contains('live')) {
+                const viewerCount = document.getElementById('live-viewer-count');
+                viewerCount.classList.remove('hidden');
+                document.getElementById('viewer-number').innerText = 
+                Math.floor(Math.random() * (1500 - 800) + 800); // Random fake viewers
+} else {
+    document.getElementById('live-viewer-count').classList.add('hidden');
+}
+
+        });
+
+        storyTimeout = setTimeout(nextStory, 5000);
+    }
+
+    function nextStory() {
+        currentIndex < stories.length - 1 ? showStory(++currentIndex) : closeStory();
+    }
+
+    function closeStory() {
+        modal.classList.add('hidden');
+        clearTimeout(storyTimeout);
+    }
+
+    // --- FEED LOGIC ---
+    composerInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && composerInput.value.trim() !== "") {
+            const post = document.createElement('div');
+            post.className = 'feed-post fade-in';
+            post.innerHTML = `<div class="post-content"><p>${composerInput.value}</p></div>`;
+            newsFeed.prepend(post);
+            composerInput.value = "";
+        }
+    });
+
+    document.getElementById('nav-right').addEventListener('click', nextStory);
+    document.getElementById('nav-left').addEventListener('click', () => currentIndex > 0 && showStory(--currentIndex));
+    closeBtn.addEventListener('click', closeStory);
+});
+  
+// Add this to your main <script>
+const trackCards = document.querySelectorAll('.track-card');
+const miniPlayer = document.getElementById('mini-player');
+const playBtn = document.querySelector('.play-pause-btn');
+
+trackCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+        // Prevent navigation for demo purposes so we can see the player
+        e.preventDefault(); 
+        
+        // Show the player
+        miniPlayer.classList.remove('hidden');
+        miniPlayer.classList.add('fade-in');
+        
+        // Update Song Title based on card clicked
+        const songName = card.textContent.replace(/[0-9]/g, '').trim();
+        document.querySelector('.song-title').innerText = songName;
+    });
+});
+
+// Play/Pause Toggle
+let isPlaying = false;
+playBtn.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    playBtn.innerText = isPlaying ? '⏸' : '▶';
+    playBtn.style.paddingLeft = isPlaying ? '0px' : '3px';
 });
 
 
 </script>
-
-  
 </body>
 </html>
