@@ -3,6 +3,11 @@
   --glow-color: rgba(229, 9, 20, 0.6);
 }
 
+a{
+  color: white;
+  background-color: black;
+}
+
 body {
   background-color: #000;
   margin: 0;
@@ -12,9 +17,6 @@ body {
   align-items: center;
   overflow: hidden;
   font-family: 'Arial Black', 'Helvetica Neue', sans-serif;
-}
-a{
-color: white;
 }
 
 /* Container that handles the slow zoom toward the user */
@@ -185,3 +187,625 @@ h2 { font-size: 1.5rem; margin: 30px 0 20px; }
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Stories Container */
+.stories-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 15px 20px;
+    gap: 15px;
+    scrollbar-width: none; /* Hides scrollbar for Firefox */
+    background: transparent;
+}
+
+.stories-container::-webkit-scrollbar {
+    display: none; /* Hides scrollbar for Chrome/Safari */
+}
+
+/* Individual Story Circle */
+.story-card {
+    flex: 0 0 auto;
+    text-align: center;
+}
+
+.story-thumb {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    padding: 3px;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+/* The 'New Story' Ring */
+.story-thumb.active {
+    border-color: #3b82f6; /* Facebook blue or accent color */
+}
+
+.story-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    background: #333;
+}
+
+/* Add Story Special Icon */
+.add-story .add-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #3b82f6;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000; /* Matches your background */
+}
+
+/* Story Modal Overlay */
+.story-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.story-modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 500px; /* Looks like a phone screen on desktop */
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#active-story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Close Button */
+.close-story {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Top Progress Bar Animation */
+.progress-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #fff;
+    width: 0%;
+}
+
+@keyframes storyProgress {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+.animate-progress {
+    animation: storyProgress 5s linear forwards;
+}
+
+/* Navigation Zones */
+.nav-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40%; /* Each side takes 40%, leaving 20% in the middle */
+    z-index: 5;
+    cursor: pointer;
+}
+.left { left: 0; }
+.right { right: 0; }
+
+/* Segmented Progress Bars */
+.progress-container {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 10;
+}
+
+.progress-segment {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-inner {
+    height: 100%;
+    background: #fff;
+    width: 0%;
+}
+
+/* Animation for the active segment */
+.active-segment .progress-inner {
+    animation: storyProgress 5s linear forwards;
+}
+
+/* Completed segments stay full */
+.seen-segment .progress-inner {
+    width: 100%;
+}
+
+/* Full Screen Blur Layer */
+.story-bg-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(50px) brightness(0.5); /* Heavy blur and slightly darkened */
+    transform: scale(1.1); /* Prevents white edges from the blur */
+    z-index: 1;
+}
+
+/* Ensure modal content sits above the blur */
+.modal-content {
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.2); /* Subtle overlay */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Adjust the main image for better focus */
+#active-story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Shows the full image without cropping */
+    background: #000;
+}
+
+.story-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 20; /* Sits above navigation zones */
+}
+
+#story-reply-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    padding: 12px 20px;
+    color: white;
+    outline: none;
+    font-size: 0.9rem;
+    backdrop-filter: blur(5px);
+}
+
+#story-reply-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#story-send-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+#story-send-btn:active {
+    transform: scale(0.9);
+}
+
+
+.news-feed {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px; /* Standard feed width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feed-post {
+    background: #141414;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #333;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.post-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.post-time {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.post-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    color: #efefef;
+}
+
+.post-image {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.post-actions {
+    display: flex;
+    border-top: 1px solid #333;
+    padding-top: 10px;
+    justify-content: space-around;
+}
+
+.action-btn {
+    background: transparent;
+    border: none;
+    color: #b3b3b3;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.action-btn:hover {
+    background: #222;
+    color: white;
+}
+
+.post-composer {
+    background: #1e1e1e;
+    border-radius: 8px;
+    padding: 15px;
+    max-width: 600px;
+    margin: 20px auto 10px;
+    border: 1px solid #333;
+}
+
+.composer-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+}
+
+#composer-input {
+    flex: 1;
+    background: #333;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: white;
+    font-size: 0.95rem;
+    outline: none;
+    transition: background 0.3s;
+}
+
+#composer-input:hover {
+    background: #444;
+}
+
+.composer-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.composer-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #b3b3b3;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.composer-option:hover {
+    background: #2a2a2a;
+    color: white;
+}
+
+.composer-option .icon {
+    font-size: 1.1rem;
+}
+
+/* Live Story Ring - More vibrant gradient */
+.story-thumb.live {
+    border-color: transparent;
+    background: linear-gradient(#000, #000) padding-box,
+                linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) border-box;
+    border: 3px solid transparent;
+}
+
+/* The Live Badge */
+.live-badge {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff0000;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 2px solid #000;
+    z-index: 10;
+    animation: pulseLive 1.5s infinite;
+}
+
+/* Pulsing effect to catch the eye */
+@keyframes pulseLive {
+    0% { opacity: 1; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.7; transform: translateX(-50%) scale(0.95); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+.art-gallery-scroll {
+    display: flex;
+    overflow-x: auto;
+    height: 80vh;
+    gap: 20px;
+    padding: 40px;
+    align-items: center;
+    scrollbar-width: none;
+}
+
+.art-item {
+    flex: 0 0 auto;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+    cursor: crosshair;
+}
+
+.art-item img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+
+.art-item:hover {
+    transform: scale(1.05) translateY(-20px);
+    box-shadow: 0 30px 60px rgba(229, 9, 20, 0.3);
+}
+
+main {
+    padding-bottom: 100px; /* Gives space so the footer doesn't block content */
+}
+.track-card {
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* existing styles... */
+}
+
+.main-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.75); /* Semi-transparent */
+    backdrop-filter: blur(20px) saturate(180%); /* Glass effect */
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 0 25px; /* Extra bottom padding for mobile home bars */
+    z-index: 1000;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+.nav-item {
+    text-decoration: none;
+    color: #888;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item:hover, .nav-item.active {
+    color: var(--netflix-red);
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+.nav-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.nav-item.active .nav-avatar {
+    border-color: var(--netflix-red);
+}
+
+.plus-btn {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, var(--netflix-red), #ff4d4d);
+    border-radius: 15px; /* Squircle shape */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px var(--glow-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: -10px; /* Pulls it slightly above the bar */
+}
+
+.plus-btn:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 20px var(--glow-color);
+}
+
+.plus-btn:active {
+    transform: scale(0.95);
+}
+
+.mini-player-dock {
+    position: fixed;
+    bottom: 75px; /* Sits exactly above your footer height */
+    left: 0;
+    width: 100%;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #333;
+    z-index: 99;
+    transition: transform 0.3s ease;
+}
+
+.player-progress-container {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.player-progress-fill {
+    height: 100%;
+    width: 35%; /* Simulated progress */
+    background: var(--netflix-red);
+    box-shadow: 0 0 10px var(--glow-color);
+}
+
+.player-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.song-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.album-art-mini {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.text-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.song-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+}
+
+.artist-name {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.play-pause-btn {
+    background: white;
+    color: black;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 3px; /* Centers the play triangle visually */
+}
+
+
