@@ -3,160 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Godiyakum - Music</title>
+    <title>Godiyakum - Exclusive News</title>
     <link rel="stylesheet" href="styling.css">
     <style>
-        /* Specific styling for internal pages */
-        .content-body {
-            padding: 40px;
-            color: white;
-            font-family: sans-serif;
+        :root {
+            --accent-red: #ff4b2b;
+            --dark-bg: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --text-gray: #bbb;
         }
+
+        body {
+            background-color: var(--dark-bg);
+            margin: 0;
+            padding: 0;
+            color: white;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .content-body {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
         .back-btn {
             display: inline-block;
-            margin-bottom: 20px;
-            color: var(--netflix-red);
+            margin: 20px 0;
+            color: white;
             text-decoration: none;
-            font-weight: bold;
-            border: 1px solid var(--netflix-red);
-            padding: 8px 15px;
-            border-radius: 4px;
+            font-size: 0.9rem;
+            opacity: 0.7;
             transition: 0.3s;
         }
-        .back-btn:hover {
-            background: var(--netflix-red);
-            color: white;
+
+        .back-btn:hover { opacity: 1; }
+
+        /* --- MAGAZINE GRID LAYOUT --- */
+        .blog-header {
+            text-align: left;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--accent-red);
+            padding-left: 20px;
         }
-    .blog-container {
-  padding: 20px;
-  max-width: 900px;
-  margin: 0 auto;
-}
 
-.blog-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
+        .blog-header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-.news-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
 
-.news-card {
-  background: #1a1a1a;
-  border-radius: 15px;
-  overflow: hidden;
-  border: 1px solid #333;
-  display: flex;
-  flex-direction: column;
-}
+        /* Make the first news item span two columns for emphasis */
+        .featured-post {
+            grid-column: span 2;
+        }
 
-.card-image {
-  position: relative;
-  height: 200px;
-}
+        @media (max-width: 768px) {
+            .featured-post { grid-column: span 1; }
+        }
 
-.card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #2a2a2a;
+        }
 
-/* Category Badges */
-.category-badge {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  padding: 5px 12px;
-  border-radius: 5px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
 
-.sports { background: #007bff; color: white; }
-.trending { background: #ff4b2b; color: white; }
+        .card-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
 
-.card-content {
-  padding: 20px;
-}
+        .featured-post .card-image { height: 350px; }
 
-.post-date {
-  color: #666;
-  font-size: 0.8rem;
-  display: block;
-  margin-bottom: 10px;
-}
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
 
-.card-content h3 {
-  color: #fff;
-  margin: 0 0 10px 0;
-  font-size: 1.3rem;
-}
+        .news-card:hover .card-image img { transform: scale(1.05); }
 
-.card-content p {
-  color: #bbb;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
+        /* --- CATEGORY TAGS --- */
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            z-index: 2;
+        }
 
-.read-more {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  border-bottom: 2px solid #ff4b2b;
-  padding-bottom: 2px;
-}
+        .sports { background: #007bff; }
+        .trending { background: #ff4b2b; }
+        .music { background: #1DB954; }
+        .lifestyle { background: #9b59b6; }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-date {
+            color: #666;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .card-content h3 {
+            margin: 0 0 12px 0;
+            font-size: 1.25rem;
+            line-height: 1.3;
+        }
+
+        .featured-post h3 { font-size: 1.8rem; }
+
+        .card-content p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            margin-top: auto;
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .read-more:hover { text-decoration: underline; }
 
     </style>
 </head>
-<body style="display: block; overflow-y: auto;"> <div class="content-body">
-        <a href="index.html" class="back-btn">← Back to Menu</a>
-            
+<body>
+
+<div class="content-body">
+    <a href="index.html" class="back-btn">← Back to Feed</a>
     
- <div class="blog-container">
-  <header class="blog-header">
-    <h1>GodiyakumGo Exclusive</h1>
-    <p>Latest in Sports, Music & Trends</p>
-  </header>
+    <header class="blog-header">
+        <h1>Exclusive</h1>
+        <p style="color: #666;">The pulse of GodiyakumGo • March 2026</p>
+    </header>
 
-  <div class="news-grid">
-    <article class="news-card">
-      <div class="card-image">
-        <span class="category-badge sports">Sports</span>
-        <img src="sports-news.jpg" alt="Sports News">
-      </div>
-      <div class="card-content">
-        <span class="post-date">March 25, 2026</span>
-        <h3>The Rise of Local Athletes: Godiyakum Analysis</h3>
-        <p>A deep dive into how new talent is changing the game this season...</p>
-        <a href="#" class="read-more">Read Full Story</a>
-      </div>
-    </article>
+    <div class="news-grid">
+        
+        <article class="news-card featured-post">
+            <div class="card-image">
+                <span class="category-badge trending">Hot Now</span>
+                <img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=800&q=80" alt="Headline">
+            </div>
+            <div class="card-content">
+                <span class="post-date">Just In</span>
+                <h3>Grammy Dreams: How Godiyakum Artists are Dominating Global Playlists</h3>
+                <p>From the streets of Pretoria to the stages of London, we track the meteoric rise of the new wave of talent currently breaking streaming records across all platforms.</p>
+                <a href="#" class="read-more">Read Full Analysis →</a>
+            </div>
+        </article>
 
-    <article class="news-card">
-      <div class="card-image">
-        <span class="category-badge trending">Trending</span>
-        <img src="trending.jpg" alt="Trending News">
-      </div>
-      <div class="card-content">
-        <span class="post-date">March 24, 2026</span>
-        <h3>Big Brother Mzansi: What's Next?</h3>
-        <p>Catch up on the latest drama and highlights from the house today.</p>
-        <a href="#" class="read-more">Read Full Story</a>
-      </div>
-    </article>
-  </div>
+        <article class="news-card">
+            <div class="card-image">
+                <span class="category-badge sports">Sports</span>
+                <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&w=500&q=80" alt="Basketball">
+            </div>
+            <div class="card-content">
+                <span class="post-date">March 25, 2026</span>
+                <h3>The Dunk heard 'round the City</h3>
+                <p>Relive the highlights of last night's championship game where the underdogs pulled off a miracle.</p>
+                <a href="#" class="read-more">View Highlights →</a>
+            </div>
+        </article>
 
-  <a href="index.html" class="back-link">← Return to Home</a>
+        <article class="news-card">
+            <div class="card-image">
+                <span class="category-badge music">Music</span>
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=500&q=80" alt="DJ">
+            </div>
+            <div class="card-content">
+                <span class="post-date">March 24, 2026</span>
+                <h3>Top 10 Amapiano Mixes This Week</h3>
+                <p>We've curated the ultimate weekend playlist to keep the energy high from dusk till dawn.</p>
+                <a href="#" class="read-more">Listen Now →</a>
+            </div>
+        </article>
+
+        <article class="news-card">
+            <div class="card-image">
+                <span class="category-badge lifestyle">Lifestyle</span>
+                <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=500&q=80" alt="Fashion">
+            </div>
+            <div class="card-content">
+                <span class="post-date">March 23, 2026</span>
+                <h3>Streetwear: The Godiyakum Look</h3>
+                <p>Explaining the aesthetic behind the new merch drop and why it's selling out in minutes.</p>
+                <a href="#" class="read-more">Shop the Collection →</a>
+            </div>
+        </article>
+
+        <article class="news-card">
+            <div class="card-image">
+                <span class="category-badge trending">TV</span>
+                <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?auto=format&fit=crop&w=500&q=80" alt="Studio">
+            </div>
+            <div class="card-content">
+                <span class="post-date">March 22, 2026</span>
+                <h3>Big Brother Mzansi: The Eviction Shock</h3>
+                <p>Nobody saw this coming. We break down the social media reaction to the most controversial exit yet.</p>
+                <a href="#" class="read-more">Join the Discussion →</a>
+            </div>
+        </article>
+
+    </div>
+    
+    <footer style="margin-top: 50px; padding: 40px 0; text-align: center; border-top: 1px solid #2a2a2a;">
+        <p style="color: #666; font-size: 0.8rem;">&copy; 2026 GodiyakumGo. All rights reserved.</p>
+    </footer>
 </div>
-       
 
 </body>
 </html>
-
-
-
