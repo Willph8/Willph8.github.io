@@ -4,8 +4,72 @@
   <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
   <title>GodiyakumGo</title>
   <link rel="stylesheet" href="styling.css">
+  <style>
+    /* --- SIDEBAR STYLING --- */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 2000; /* Above everything */
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.4s;
+      padding-top: 60px;
+      box-shadow: 2px 0px 10px rgba(0,0,0,0.5);
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+      font-family: sans-serif;
+    }
+
+    .sidebar a:hover {
+      color: #f1f1f1;
+      background: #222;
+    }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+      cursor: pointer;
+    }
+
+    .menu-trigger {
+      font-size: 24px;
+      cursor: pointer;
+      color: white;
+      margin-right: 15px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+    }
+    
+    /* Ensure the mini-logo stays flexible */
+    .mini-logo { flex-grow: 1; }
+  </style>
 </head>
 <body>
+
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="exclusive.html">📰 News</a>
+  <a href="music.html">🎵 Music</a>
+  <hr style="border: 0.5px solid #333; margin: 10px 20px;">
+  <a href="index.html">🏠 Home</a>
+</div>
 
 <div class="viewport-center">
   <div class="zoom-wrapper">
@@ -17,30 +81,29 @@
 
 <div id="home-screen" class="hidden">
   <header>
+    <span class="menu-trigger" onclick="openNav()">&#9776;</span>
     <div class="mini-logo">Godiyakum</div>
     <div class="user-icon">👤</div>
   </header>
   
   <div class="stories-container">
-    <div class="story-card"><div class="story-thumb add-story"><img src="img_2_1773290822131.jpg"><div class="add-icon">+</div></div></div>
-    <div class="story-card"><div class="story-thumb active"><img src="home.jpg"></div></div>
-    <div class="story-card"><div class="story-thumb active live"><img src="downloadfile-9.jpeg"><!--<span class="live-badge">LIVE</span>--></div></div>
-    <div class="story-card"><div class="story-thumb"><img src="1773953980364.png"></div></div>
+    <div class="story-card"><div class="story-thumb add-story"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"><div class="add-icon">+</div></div></div>
+    <div class="story-card"><div class="story-thumb active"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"></div></div>
+    <div class="story-card"><div class="story-thumb active live"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"></div></div>
+    <div class="story-card"><div class="story-thumb"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80"></div></div>
   </div>
 
   <main>
     <div class="track-grid">
-      <a href="music.html" style="text-decoration: none;"><div class="track-card"><span>1</span><img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=50&q=80" class="album-art-mini">
-        wilph8-changes</div></a>
-      <a href="artgallery.html" style="text-decoration: none;"><div class="track-card"><span>2</span><img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=50&q=80" class="album-art-mini">
-        wilph8-try again</div></a>
-      <a href="exclusive.html" style="text-decoration: none;"><div class="track-card"><span>3</span><img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=50&q=80" class="album-art-mini">
-        wilph8-voicemail</div></a>
+      <a href="music.html" style="text-decoration: none;"><div class="track-card"><span>1</span>
+        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=50&q=80" class="album-art-mini">wilph8-changes</div></a>      
+      <a href="artgallery.html" style="text-decoration: none;"><div class="track-card"><span>2</span><img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=50&q=80" class="album-art-mini">wilph8-try again</div></a>
+      <a href="exclusive.html" style="text-decoration: none;"><div class="track-card"><span>3</span><img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=50&q=80" class="album-art-mini">wilph8-voicemail</div></a>
     </div>
 
     <div class="post-composer">
       <div class="composer-top">
-        <img src="img_2_1773290822131.jpg" class="post-avatar">
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=50&q=80" class="post-avatar">
         <input type="text" id="composer-input" placeholder="What's on your mind?">
       </div>
     </div>
@@ -48,7 +111,7 @@
     <div class="news-feed">
       <div class="feed-post">
         <div class="post-header">
-          <img src="downloadfile-9.jpeg" class="post-avatar">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=50&q=80" class="post-avatar">
           <div class="post-user-info"><span class="user-name">Creative Studio</span><span class="post-time">2h ago</span></div>
         </div>
         <div class="post-content">
@@ -65,7 +128,7 @@
   
   <div class="player-content">
     <div class="song-info">
-      <img src="img_2_1773290822131.jpg" class="album-art-mini">
+      <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=50&q=80" class="album-art-mini">      
       <div class="text-meta">
         <span class="song-title">Vibe Check (Exclusive)</span>
         <span class="artist-name">Godiyakum Artist</span>
@@ -78,15 +141,13 @@
   </div>
 </div>
   
-  
-  
   <footer class="main-footer">
     <nav class="footer-nav">
       <a href="#" class="nav-item active"><span class="nav-icon">🏠</span></a>
       <a href="#" class="nav-item"><span class="nav-icon">🔍</span></a>
       <div class="nav-item"><div class="plus-btn">+</div></div>
       <a href="#" class="nav-item"><span class="nav-icon">🔔</span></a>
-      <a href="#" class="nav-item"><img src="img_2_1773290822131.jpg" class="nav-avatar"></a>
+      <a href="#" class="nav-item"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=50&q=80" class="nav-avatar"></a>
     </nav>
   </footer>
 </div>
@@ -109,9 +170,16 @@
   </div>
 </div>
 
-  
-  
 <script>
+/* SIDEBAR FUNCTIONS */
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const intro = document.querySelector('.viewport-center');
     const home = document.getElementById('home-screen');
@@ -121,14 +189,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const bgBlur = document.getElementById('story-bg-blur');
     const progressContainer = document.getElementById('progress-container');
     const stories = document.querySelectorAll('.story-thumb');
-    const replyInput = document.getElementById('story-reply-input');
     const composerInput = document.getElementById('composer-input');
     const newsFeed = document.querySelector('.news-feed');
     
     let currentIndex = 0;
     let storyTimeout;
 
-    // --- INTRO LOGIC ---
     if (sessionStorage.getItem("viewedIntro")) {
         intro.style.display = 'none';
         home.classList.remove('hidden');
@@ -144,7 +210,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 4500);
     }
 
-    // --- STORY LOGIC ---
     stories.forEach((story, index) => {
         story.addEventListener('click', () => {
             currentIndex = index;
@@ -167,16 +232,13 @@ document.addEventListener("DOMContentLoaded", function() {
             inner.className = 'progress-inner';
             segment.appendChild(inner);
             progressContainer.appendChild(segment);
-              // Add this inside your showStory function if stories[index] has the 'live' class
-              if (stories[index].classList.contains('live')) {
-                const viewerCount = document.getElementById('live-viewer-count');
-                viewerCount.classList.remove('hidden');
-                document.getElementById('viewer-number').innerText = 
-                Math.floor(Math.random() * (1500 - 800) + 800); // Random fake viewers
-} else {
-    document.getElementById('live-viewer-count').classList.add('hidden');
-}
-
+            
+            if (stories[index].classList.contains('live')) {
+                document.getElementById('live-viewer-count').classList.remove('hidden');
+                document.getElementById('viewer-number').innerText = Math.floor(Math.random() * (1500 - 800) + 800);
+            } else {
+                document.getElementById('live-viewer-count').classList.add('hidden');
+            }
         });
 
         storyTimeout = setTimeout(nextStory, 5000);
@@ -191,7 +253,6 @@ document.addEventListener("DOMContentLoaded", function() {
         clearTimeout(storyTimeout);
     }
 
-    // --- FEED LOGIC ---
     composerInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && composerInput.value.trim() !== "") {
             const post = document.createElement('div');
@@ -206,36 +267,26 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('nav-left').addEventListener('click', () => currentIndex > 0 && showStory(--currentIndex));
     closeBtn.addEventListener('click', closeStory);
 });
-  
-// Add this to your main <script>
+
 const trackCards = document.querySelectorAll('.track-card');
 const miniPlayer = document.getElementById('mini-player');
 const playBtn = document.querySelector('.play-pause-btn');
 
 trackCards.forEach(card => {
     card.addEventListener('click', (e) => {
-        // Prevent navigation for demo purposes so we can see the player
         e.preventDefault(); 
-        
-        // Show the player
         miniPlayer.classList.remove('hidden');
         miniPlayer.classList.add('fade-in');
-        
-        // Update Song Title based on card clicked
         const songName = card.textContent.replace(/[0-9]/g, '').trim();
         document.querySelector('.song-title').innerText = songName;
     });
 });
 
-// Play/Pause Toggle
 let isPlaying = false;
 playBtn.addEventListener('click', () => {
     isPlaying = !isPlaying;
     playBtn.innerText = isPlaying ? '⏸' : '▶';
-    playBtn.style.paddingLeft = isPlaying ? '0px' : '3px';
 });
-
-
 </script>
 </body>
 </html>
