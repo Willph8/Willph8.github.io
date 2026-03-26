@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Godiyakum - Music</title>
-    <link rel="stylesheet" href="styling.css">
+    <title>Godiyakum - Music Store</title>
     <style>
         :root {
             --spotify-green: #1DB954;
@@ -12,240 +11,288 @@
             --spotify-light-black: #181818;
             --spotify-gray: #b3b3b3;
             --spotify-hover: #282828;
+            --gold-accent: #ffb400;
+            --error-red: #e91e63;
         }
 
         body {
             background-color: var(--spotify-black);
             color: white;
-            font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
+            overflow-x: hidden;
         }
 
-        .content-body {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* --- SPOTIFY HEADER --- */
-        .header-container {
+        /* --- CART ICON --- */
+        .cart-trigger {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: var(--spotify-light-black);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 1000;
             display: flex;
-            align-items: flex-end;
-            gap: 20px;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #282828;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .header-container h1 {
-            font-size: 3rem;
-            margin: 0;
-            letter-spacing: -2px;
+        .cart-count {
+            background: var(--spotify-green);
+            color: black;
+            font-weight: bold;
+            font-size: 0.8rem;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
-        .back-btn {
-            color: var(--spotify-gray);
-            text-decoration: none;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        .back-btn:hover { color: white; }
-
-        /* --- TRACK LIST (SPOTIFY STYLE) --- */
-        .track-list {
+        /* --- CART SIDEBAR --- */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100%;
+            background: #080808;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.7);
+            z-index: 2000;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 30px 25px;
             display: flex;
             flex-direction: column;
-            width: 100%;
         }
 
-        .track-row {
-            display: grid;
-            grid-template-columns: 50px 1fr 100px 150px;
+        .cart-sidebar.open { right: 0; }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 10px 16px;
-            border-radius: 4px;
-            transition: background 0.3s ease;
-            cursor: pointer;
+            margin-bottom: 30px;
         }
 
-        .track-row:hover {
-            background-color: var(--spotify-hover);
-        }
+        .close-cart { cursor: pointer; font-size: 2rem; color: var(--spotify-gray); }
+        .close-cart:hover { color: white; }
 
-        .track-number {
-            color: var(--spotify-gray);
-            font-variant-numeric: tabular-nums;
-        }
+        /* --- CART ITEM LIST --- */
+        .cart-items-list { flex-grow: 1; overflow-y: auto; }
 
-        .track-info-main {
+        .cart-item {
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: space-between;
+            background: #151515;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
 
-        .album-art {
-            width: 40px;
-            height: 40px;
-            background: #282828;
-            border-radius: 4px;
-            object-fit: cover;
-        }
+        .item-info { display: flex; flex-direction: column; }
+        .item-name { font-weight: bold; font-size: 0.95rem; }
+        .item-price { color: var(--gold-accent); font-size: 0.85rem; margin-top: 4px; }
 
-        .text-details h3 {
-            margin: 0;
-            font-size: 1rem;
-            font-weight: 400;
-        }
-
-        .text-details p {
-            margin: 0;
-            font-size: 0.85rem;
-            color: var(--spotify-gray);
-        }
-
-        .badge-exclusive {
-            color: var(--spotify-green);
-            font-size: 0.7rem;
-            font-weight: bold;
-            border: 1px solid var(--spotify-green);
-            padding: 2px 6px;
-            border-radius: 3px;
-            text-transform: uppercase;
-        }
-
-        /* --- BUTTONS --- */
-        .play-icon-btn {
+        .remove-btn {
             background: none;
             border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            visibility: hidden; /* Only show on hover like Spotify */
-        }
-
-        .track-row:hover .play-icon-btn {
-            visibility: visible;
-        }
-
-        .track-row:hover .track-number {
-            display: none;
-        }
-
-        .download-link {
             color: var(--spotify-gray);
-            text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 0 5px;
         }
 
-        .download-link:hover {
-            color: white;
-            text-decoration: underline;
+        .remove-btn:hover { color: var(--error-red); transform: scale(1.2); }
+
+        .cart-footer {
+            border-top: 1px solid #222;
+            padding-top: 25px;
         }
 
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--spotify-green);
+            color: black;
+            border: none;
+            padding: 16px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover { transform: scale(1.02); background: #1ed760; }
+
+        /* --- TOAST NOTIFICATION --- */
+        #toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--spotify-green);
+            color: black;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.5s;
+            z-index: 3000;
+        }
+        #toast.show { bottom: 30px; }
+
+        /* --- PAGE CONTENT --- */
+        .playlist-header { display: flex; align-items: flex-end; gap: 25px; padding: 50px 0; }
+        .playlist-cover { width: 200px; height: 200px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .track-table { width: 100%; border-collapse: collapse; }
+        .track-row { border-radius: 5px; transition: 0.2s; cursor: pointer; }
+        .track-row:hover { background: var(--spotify-hover); }
+        .track-row td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .buy-btn { background: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .buy-btn:hover { background: var(--spotify-green); color: black; }
+        .price-tag { color: var(--gold-accent); font-weight: bold; font-family: monospace; }
     </style>
 </head>
 <body>
 
-    <div class="content-body">
-        <a href="index.html" class="back-btn">← Home</a>
+    <div id="toast">Added to Cart! 🎵</div>
+
+    <div class="cart-trigger" onclick="toggleCart()">
+        <span>🛒</span>
+        <span class="cart-count" id="cart-count">0</span>
+    </div>
+
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2 style="margin:0;">Store Cart</h2>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
         
-        <div class="header-container">
-            <h1>Music Library</h1>
-        </div>
-
-        <div class="track-row" style="border-bottom: 1px solid #282828; cursor: default; color: var(--spotify-gray); font-size: 0.8rem; text-transform: uppercase;">
-            <span>#</span>
-            <span>Title</span>
-            <span>Status</span>
-            <span style="text-align: right; padding-right: 15px;">Action</span>
-        </div>
-
-        <div class="track-list">
-            
-            <div class="track-row" data-track-id="1">
-                <span class="track-number">1</span>
-                <button class="play-icon-btn">▶</button>
-                <div class="track-info-main">
-                    <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=50" class="album-art">
-                    <div class="text-details">
-                        <h3>New Energy (Godiyakum Mix)</h3>
-                        <p>Godiyakum Records • Demo</p>
-                    </div>
-                </div>
-                <div><span class="badge-exclusive">Exclusive</span></div>
-                <div style="text-align: right;">
-                    <a href="demo-track.mp3" download class="download-link">Download</a>
-                </div>
-                <audio id="audio-1" src="demo-track.mp3"></audio>
+        <div class="cart-items-list" id="cart-items">
             </div>
 
-            <div class="track-row" data-track-id="2">
-                <span class="track-number">2</span>
-                <button class="play-icon-btn">▶</button>
-                <div class="track-info-main">
-                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=50" class="album-art">
-                    <div class="text-details">
-                        <h3>Late Night Vibes</h3>
-                        <p>Godiyakum Records • Original</p>
-                    </div>
-                </div>
-                <div></div>
-                <div style="text-align: right;">
-                    <a href="#" class="download-link">Download</a>
-                </div>
-                <audio id="audio-2" src="track2.mp3"></audio>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Total</span>
+                <span id="cart-total">R 0.00</span>
             </div>
-
-            <div class="track-row" data-track-id="3">
-                <span class="track-number">3</span>
-                <button class="play-icon-btn">▶</button>
-                <div class="track-info-main">
-                    <img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=50" class="album-art">
-                    <div class="text-details">
-                        <h3>Afro-Sunset</h3>
-                        <p>Godiyakum Records • Instrumental</p>
-                    </div>
-                </div>
-                <div><span class="badge-exclusive">Exclusive</span></div>
-                <div style="text-align: right;">
-                    <a href="#" class="download-link">Download</a>
-                </div>
-                <audio id="audio-3" src="track3.mp3"></audio>
-            </div>
-
+            <button class="checkout-btn" onclick="alert('Checking out...')">Secure Checkout</button>
         </div>
     </div>
 
+    <div class="content-body">
+        <a href="index.html" style="color:var(--spotify-gray); text-decoration:none; font-size: 0.9rem;">← Back to App</a>
+
+        <div class="playlist-header">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400" class="playlist-cover">
+            <div class="playlist-info">
+                <p style="text-transform:uppercase; font-size: 0.7rem; font-weight: bold; margin:0;">Collection</p>
+                <h1 style="font-size: 4rem; margin: 10px 0; letter-spacing: -2px;">Godiyakum Gold</h1>
+            </div>
+        </div>
+
+        <table class="track-table">
+            <thead>
+                <tr style="color:var(--spotify-gray); font-size:0.75rem; text-align:left; text-transform:uppercase;">
+                    <th style="padding:15px;">#</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th style="text-align:right; padding-right:15px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="track-row">
+                    <td>1</td>
+                    <td>try again (wilph8)</td>
+                    <td class="price-tag">R 15.00</td>
+                    <td style="text-align:right;"><button class="buy-btn" onclick="addToCart('try again', 15.00)">Add</button></td>
+                </tr>
+                <tr class="track-row">
+                    <td>2</td>
+                    <td>voicemail (wilph8)</td>
+                    <td class="price-tag">R 12.00</td>
+                    <td style="text-align:right;"><button class="buy-btn" onclick="addToCart('voicemail', 12.00)">Add</button></td>
+                </tr>
+                <tr class="track-row">
+                    <td>3</td>
+                    <td>changes (wilph8)</td>
+                    <td class="price-tag">R 20.00</td>
+                    <td style="text-align:right;"><button class="buy-btn" onclick="addToCart('changes', 20.00)">Add</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
     <script>
-        // Handle playing multiple tracks independently
-        const trackRows = document.querySelectorAll('.track-row[data-track-id]');
-        
-        trackRows.forEach(row => {
-            const trackId = row.getAttribute('data-track-id');
-            const audio = document.getElementById(`audio-${trackId}`);
-            const playBtn = row.querySelector('.play-icon-btn');
+        let cart = [];
 
-            row.addEventListener('click', (e) => {
-                // Don't trigger play if clicking the download link
-                if (e.target.classList.contains('download-link')) return;
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('open');
+        }
 
-                if (audio.paused) {
-                    // Pause all other audios first (Spotify behavior)
-                    document.querySelectorAll('audio').forEach(a => a.pause());
-                    document.querySelectorAll('.play-icon-btn').forEach(b => b.textContent = '▶');
-                    
-                    audio.play();
-                    playBtn.textContent = '⏸';
-                } else {
-                    audio.pause();
-                    playBtn.textContent = '▶';
-                }
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            showToast();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cart-items');
+            const count = document.getElementById('cart-count');
+            const totalDisplay = document.getElementById('cart-total');
+            
+            list.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                list.innerHTML = `<div style="text-align:center; color:#444; margin-top:50px;">
+                    <p style="font-size:3rem;">🛒</p>
+                    <p>Your cart is empty.</p>
+                </div>`;
+            }
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div class="item-info">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-price">R ${item.price.toFixed(2)}</span>
+                    </div>
+                    <button class="remove-btn" onclick="removeFromCart(${index})">&times;</button>
+                `;
+                list.appendChild(div);
             });
-        });
+
+            count.innerText = cart.length;
+            totalDisplay.innerText = `R ${total.toFixed(2)}`;
+        }
     </script>
 </body>
 </html>
